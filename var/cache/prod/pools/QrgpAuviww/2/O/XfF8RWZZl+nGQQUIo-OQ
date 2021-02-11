@@ -1,0 +1,77 @@
+<?php //%255BApp%255CEntity%255CMigrationVersions%2524CLASSMETADATA%255D%255B1%255D
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ClassMetadata')),
+        clone ($p['Doctrine\\ORM\\Id\\IdentityGenerator'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Id\\IdentityGenerator')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'App\\Entity\\MigrationVersions',
+            ],
+            'namespace' => [
+                'App\\Entity',
+            ],
+            'rootEntityName' => [
+                'App\\Entity\\MigrationVersions',
+            ],
+            'identifier' => [
+                [
+                    'version',
+                ],
+            ],
+            'generatorType' => [
+                4,
+            ],
+            'fieldMappings' => [
+                [
+                    'version' => [
+                        'fieldName' => 'version',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 14,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'version',
+                        'id' => true,
+                    ],
+                    'executedAt' => [
+                        'fieldName' => 'executedAt',
+                        'type' => 'datetime_immutable',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'executed_at',
+                    ],
+                ],
+            ],
+            'fieldNames' => [
+                [
+                    'version' => 'version',
+                    'executed_at' => 'executedAt',
+                ],
+            ],
+            'columnNames' => [
+                [
+                    'version' => 'version',
+                    'executedAt' => 'executed_at',
+                ],
+            ],
+            'table' => [
+                [
+                    'name' => 'migration_versions',
+                ],
+            ],
+            'idGenerator' => [
+                $o[1],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); }];

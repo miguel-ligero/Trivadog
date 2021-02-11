@@ -1,0 +1,167 @@
+<?php //%255BApp%255CEntity%255CAutocomplete%2524CLASSMETADATA%255D%255B1%255D
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ClassMetadata')),
+        clone ($p['Doctrine\\ORM\\Id\\IdentityGenerator'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Id\\IdentityGenerator')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'App\\Entity\\Autocomplete',
+            ],
+            'namespace' => [
+                'App\\Entity',
+            ],
+            'rootEntityName' => [
+                'App\\Entity\\Autocomplete',
+            ],
+            'customRepositoryClassName' => [
+                'App\\Repository\\AutocompleteRepository',
+            ],
+            'identifier' => [
+                [
+                    'id',
+                ],
+            ],
+            'generatorType' => [
+                4,
+            ],
+            'fieldMappings' => [
+                [
+                    'id' => [
+                        'fieldName' => 'id',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'id',
+                        'id' => true,
+                    ],
+                    'textobusqueda' => [
+                        'fieldName' => 'textobusqueda',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 600,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'textobusqueda',
+                    ],
+                    'tipo' => [
+                        'fieldName' => 'tipo',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 2,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'tipo',
+                    ],
+                    'admin1code' => [
+                        'fieldName' => 'admin1code',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 20,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'admin1code',
+                    ],
+                    'admin2code' => [
+                        'fieldName' => 'admin2code',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 80,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'admin2code',
+                    ],
+                    'admin3code' => [
+                        'fieldName' => 'admin3code',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 20,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'admin3code',
+                    ],
+                    'admin4code' => [
+                        'fieldName' => 'admin4code',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 20,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'admin4code',
+                    ],
+                    'idhospedaje' => [
+                        'fieldName' => 'idhospedaje',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'idhospedaje',
+                    ],
+                ],
+            ],
+            'fieldNames' => [
+                [
+                    'id' => 'id',
+                    'textobusqueda' => 'textobusqueda',
+                    'tipo' => 'tipo',
+                    'admin1code' => 'admin1code',
+                    'admin2code' => 'admin2code',
+                    'admin3code' => 'admin3code',
+                    'admin4code' => 'admin4code',
+                    'idhospedaje' => 'idhospedaje',
+                ],
+            ],
+            'columnNames' => [
+                [
+                    'id' => 'id',
+                    'textobusqueda' => 'textobusqueda',
+                    'tipo' => 'tipo',
+                    'admin1code' => 'admin1code',
+                    'admin2code' => 'admin2code',
+                    'admin3code' => 'admin3code',
+                    'admin4code' => 'admin4code',
+                    'idhospedaje' => 'idhospedaje',
+                ],
+            ],
+            'table' => [
+                [
+                    'name' => 'autocomplete',
+                ],
+            ],
+            'idGenerator' => [
+                $o[1],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); }];

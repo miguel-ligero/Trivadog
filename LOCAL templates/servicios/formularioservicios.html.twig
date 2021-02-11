@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/provider.css">
+  <link rel="stylesheet" href="/css/service.css">
+  <link rel="stylesheet" href="/css/modal.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row py-4 ml-1" style="height: 20%"></div>
+  <div class="row justify-content-center">
+    <div id="left-menu" class="col-10 col-lg-2 pr-0">
+      <div>
+        <a id="btn-new" href="/proveedores/cuentaproveedor" class="btn btn-primary mb-2 btn-home " type="button" >Volver</a>
+        <a id="btn-new" href="" class="btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-nuevo" aria-expanded="false" aria-controls="collapseExample">Editar</a>
+        <div class="collapse" id="collapse-nuevo">
+          <div class="card-body pt-0 menu-pos">
+            <a href="/proveedores/habitacion/editar/{{ roomid }}" class="menu">Datos habitación</a>
+            <hr class="my-1">
+            <a href="/servicioshabitaciones/formularioservicios/{{ roomid }}" class="menu">Servicios</a>
+            <hr class="my-1">
+            <a href="/multimedia/{{ roomid }}" class="menu">Imagenes</a>
+            <hr class="my-1">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-12 px-0 pb-3">
+          <form id="form-register" action="/servicioshabitaciones/guardar" method="post">
+            <div class="row pb-4">
+              <input id="roomid" name="roomid" type="hidden" value="{{ roomid }}">
+              <input id="providerid" name="providerid" type="hidden" value="{{ providerid }}">
+              <div class="col-12 col-lg-11">
+                <div class="card row">
+                  {% for item in service %}
+                    {% set checked = "" %}
+                    {% for val in roomservice %}
+                      {% if item.id == val.idservicio.id %}
+                        {% set checked = "checked" %}
+                      {% endif %}
+                    {% endfor %}
+                    <div class="form-check col-4 col-sm-3 col-lg-2 my-2 ml-3">
+                      <input id="checkbox{{ item.id }}" name="checkarray[]" class="form-check-input" type="checkbox" value="{{ item.id }}" {{ checked }}>
+                      <label class="form-check-label checkbox" for="checkbox{{ item.id }}">{{ item.nombre }}</label>
+                    </div>
+                  {% endfor %}
+                  <div class="col-12 py-3">
+                    <div class="row justify-content-center">
+                      <button id="btn-send" type="submit" class="btn btn-primary btn-lg btn-home ml-2">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-1"></div>
+            </div>
+          </form>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal error-->
+<div id="myModal"class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title">Guardado!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="/img/ico/dog_pilot.ico" style="float:left">
+        <p id="modal-text" class="modal-text mt-3">Servicios agregados a la habitación satisfactoriamente.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  {% set modal = 'hide' %}
+  {% if querystatus == 'ok' %}
+    {% set modal = 'show' %}
+  {% endif %}
+  $(document).ready(function (){
+    $('#myModal').modal('{{ modal }}');
+  });
+</script>
+{% endblock %}

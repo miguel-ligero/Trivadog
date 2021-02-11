@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Editar Tipo hospedaje{% endblock %} #}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Editar Tipo hospedaje</h1>
+    <a class="btn btn-primary mb-4 btn-home" href="{{ path('tipohospedaje_index') }}">Volver</a>
+    {{ include('tipohospedaje/_form.html.twig', {'button_label': 'Guardar'}) }}
+
+    {{ include('tipohospedaje/_delete_form.html.twig') }}
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Tipo hospedaje{% endblock %} #}
+
+{% block body %}
+<div class="container">
+    <h1>Tipo hospedaje</h1>
+    <div>
+        <a class="btn btn-primary mb-4 btn-home" href="{{ path('back') }}">Volver</a>
+    </div>
+    <div>
+        <a class="btn btn-primary mb-4 btn-home" href="{{ path('tipohospedaje_new') }}">Crear nuevo</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Fechacreacion</th>
+                <th>Activo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tipohospedaje in tipohospedajes %}
+            <tr>
+                <td>{{ tipohospedaje.id }}</td>
+                <td>{{ tipohospedaje.nombre }}</td>
+                <td>{{ tipohospedaje.fechacreacion ? tipohospedaje.fechacreacion|date('Y-m-d') : '' }}</td>
+                <td>{{ tipohospedaje.activo ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('tipohospedaje_show', {'id': tipohospedaje.id}) }}">Detalles</a>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('tipohospedaje_edit', {'id': tipohospedaje.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No se ha encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+</div>
+{% endblock %}

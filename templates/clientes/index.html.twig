@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Clientes{% endblock %} #}
+
+{% block body %}
+<div class="container">
+    <h1>Clientes</h1>
+
+    <a class="btn btn-primary mb-4 btn-home" href="{{ path('back') }}">Volver</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.apellidos }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('clientes_show', {'id': cliente.id}) }}">Detalles</a>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('clientes_edit', {'id': cliente.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">No se ha encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+</div>
+{% endblock %}

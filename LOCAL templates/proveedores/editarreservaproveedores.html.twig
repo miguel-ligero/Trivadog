@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/css/reserveprovider.css">
+  <link rel="stylesheet" href="/css/provider.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row py-4 ml-1" style="height: 20%"></div>
+  <div class="row justify-content-center">
+    <div id="left-menu" class="col-12 col-lg-3 pr-0">
+      <div >
+        <a href="/proveedores/reservas" class=" btn btn-primary mb-2 btn-home ">Volver</a>
+      </div>
+      <div>
+        <a id="btn-new" href="/proveedores/reservas" class= "btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-nuevo" aria-expanded="false" aria-controls="collapseExample">Nuevo</a>
+        <div class="collapse" id="collapse-nuevo">
+          <div class="card-body pt-0 menu-pos">
+            <a href="/hospedaje/alojamiento/nuevo" class="menu">Alojamiento</a>
+            <hr class="my-1">
+            <a href="/proveedores/habitacion/nuevo" class="menu">Habitación</a>
+            <hr class="my-1">
+          </div>
+        </div>
+      </div>
+      <div>
+        <a id="btn-accommodation" href="" class= "btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-alojamiento" aria-expanded="false" aria-controls="collapseExample">Alojamientos</a>
+        <div class="collapse" id="collapse-alojamiento">
+          <div class="card-body pt-0 menu-pos">
+            {% for val in host %}
+              <a href="/hospedaje/alojamiento/editar/{{ val.id }}/{{ val.idproveedor.id }}" class="menu">{{ val.nombre }}</a>
+              <hr class="my-1">
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mx-2 col-lg-8">
+      <div class="row title-color ">
+        <div class="col-12">
+          <h3 class="text">Reservas</h3>
+        </div>
+        <div class="col-12  col-lg-12">
+          <div class="table-responsive-lg">
+            <table class="table table-sm table-striped table-hover">
+              <thead>
+                <tr>
+                  <th class="text">Id Reserva</th>
+                  <th class="text">Id Cliente</th>
+                  <th class="text">Id Habitación</th>
+                  <th class="text">Fecha Inicio</th>
+                  <th class="text">Fecha Fin</th>
+                  <th class="text">Precio x noche</th>
+                  <th class="text">Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in room %}
+                  <tr id="tr-data-{{ item.id }}">
+                    <td id="td-id-{{ item.id}}" class="text">{{item.id}}</td>
+                    <td id="td-customerid-{{ item.id}}" class="text">{{item.idCliente}}</td>
+                    <td id="td-roomid-{{ item.id}}" class="text">{{item.idHabitacion}}</td>
+                    <td id="td-from-{{ item.id}}" class="text">{{item.fechaInicio|date('d/m/Y')}}</td>
+                    <td id="td-to-{{ item.id}}" class="text">{{item.fechaFin|date('d/m/Y')}}</td>
+                    <td id="td-priceunit-{{ item.id}}" class="text">{{item.precio_noche}}</td>
+                    <td id="td-price-{{ item.id}}" class="text">{{item.precio}}</td>
+                    <input id="adults-{{ item.id }}" type="hidden" value="{{ item.adultos }}">
+                    <input id="children-{{ item.id }}" type="hidden" value="{{ item.infantiles }}">
+                    <input id="pets-{{ item.id }}" type="hidden" value="{{ item.mascotas }}">
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <input id="providerid" type="hidden" value="{{ app.user.id }}">
+        <input id="page" type="hidden" value="{{ page }}">
+        <div class="col">
+          <h4 class="text">ID: <span id="title-id">{{ reserve.id }}</span></h4>
+        </div>
+      </div>
+      <div class="row justify-content-center ml-2 mb-2 mt-1 result-hist">
+        <div class="col-10 px-0 py-3">
+          <form id="reserve" method="post" action="/proveedores/reservas/guardar">
+          <input id="inputreserveid" name="reserveid" type="hidden" value="{{ reserve.id }}">
+            <div class="form-group">
+              <label for="">Fecha inicio</label>
+              <input id="inputfrom" name="inputfrom" type="text" class="form-control form-control-sm search-date" value="{{ reserve.fechaInicio|date('d/m/Y') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="">Fecha fin</label>
+              <input id="inputto" name="inputto" type="text" class="form-control form-control-sm search-date" value="{{ reserve.fechaFin|date('d/m/Y') }}" required>
+            </div>
+            <div class="form-group">
+              <label id="inputpricelabel" for="inputprice">Precio</label>
+              <input id="inputprice" name="inputprice" type="text" class="form-control form-control-sm search-date" value="{{ reserve.precio }}" required>
+            </div>
+            <div class="form-group">
+              <label for="">Adultos</label>
+              <input id="inputadults" name="inputadults" type="text" class="form-control" value="{{ reserve.adultos }}">
+            </div>
+            <div class="form-group">
+              <label for="">Infantiles</label>
+              <input id="inputchildren" name="inputchildren" type="text" class="form-control" value="{{ reserve.infantiles }}">
+            </div>
+            <div class="form-group">
+              <label for="">Mascotas</label>
+              <input id="inputpets" name="inputpets" type="text" class="form-control" value="{{ reserve.mascotas }}">
+            </div>
+            <button type="submit" class="btn btn-primary btn-home">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{{ asset('js/provider.js') }}"></script>
+  <script src="{{ asset('js/datepicker.js') }}"></script>
+  <script>
+    $(document).ready(function (){
+      InicializarReservasProveedores();
+    });
+
+    function InicializarReservasProveedores(){
+      EventosTabla();
+    }
+
+    function EventosTabla(){
+      $("tr[id^=tr-data-]").click(function($this){
+        var reserveid = $this.currentTarget.id;
+        var padre = $(reserveid).closest('tr');
+        var padre = $(padre).attr('id');
+        var id = reserveid.slice(8);
+        var providerid = $('#providerid').val();
+        var roomid = $('#td-roomid-' + id).html();
+        var from = $('#td-from-' + id).html();
+        datefrom = DateFormat(from);
+        var to = $('#td-to-' + id).html();
+        dateto = DateFormat(to);
+        var page = $('#page').val();
+        var price = $('#td-price-' + id).html();
+        var price_night = $('#td-priceunit-'+ id).html();
+        datefrom = new Date(datefrom);
+        dateto = new Date(dateto);
+        var days = dateto - datefrom;
+        days = days / (1000 * 60 * 60 * 24);
+        var pricecheck = price_night * days;
+        var adults = $('#adults-'+ id).val();
+        var children = $('#children-'+ id).val();
+        var pets = $('#pets-'+ id).val();
+
+        $('b.info').remove();
+        if (price < pricecheck){
+          $('#inputpricelabel').after(" <b class='info'>Promocionado</b>");
+        }
+
+        $('#inputfrom').val(from);
+        $('#inputto').val(to);
+        $('#inputprice').val(price);
+        $('#title-id').text(id);
+        $('#inputreserveid').val(id);
+        $('#inputadults').val(adults);
+        $('#inputchildren').val(children);
+        $('#inputpets').val(pets);
+
+      });
+    }
+
+    function DateFormat(date){
+      var arraydate = date.split("/")
+      var orderdate = arraydate.reverse();
+      var formatdate = orderdate.join("/");
+      return formatdate;
+    } 
+  </script>
+{% endblock %}
+

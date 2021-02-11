@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Habitaciones{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Habitaciones</h1>
+
+    <a class="btn btn-primary mb-4 btn-home" href="{{ path('back') }}">Volver</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Fechacreacion</th>
+                <th>Activo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for habitacione in habitaciones %}
+            <tr>
+                <td>{{ habitacione.id }}</td>
+                <td>{{ habitacione.nombre }}</td>
+                <td>{{ habitacione.fechacreacion ? habitacione.fechacreacion|date('Y-m-d') : '' }}</td>
+                <td>{{ habitacione.activo ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('habitaciones_show', {'id': habitacione.id}) }}">Detalles</a>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('habitaciones_edit', {'id': habitacione.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

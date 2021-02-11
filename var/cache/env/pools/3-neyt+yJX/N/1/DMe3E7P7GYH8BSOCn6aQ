@@ -1,0 +1,48 @@
+<?php //Proxies___CG___App_Entity_Perfil
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
+        clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'Proxies\\__CG__\\App\\Entity\\Perfil',
+                '__initializer__',
+                '__cloner__',
+                '__isInitialized__',
+                'lazyPropertiesNames',
+                'lazyPropertiesDefaults',
+                'id',
+                'nombre',
+                'fechacreacion',
+                'activo',
+            ],
+            'attributesMetadata' => [
+                [
+                    '__initializer__' => $o[1],
+                    '__cloner__' => $o[2],
+                    '__isInitialized__' => $o[3],
+                    'lazyPropertiesNames' => $o[4],
+                    'lazyPropertiesDefaults' => $o[5],
+                    'id' => $o[6],
+                    'nombre' => $o[7],
+                    'fechacreacion' => $o[8],
+                    'activo' => $o[9],
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); }];

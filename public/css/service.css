@@ -1,0 +1,11 @@
+.card {
+  flex-direction: unset !important
+}
+
+.form-check-label {
+  width: max-content !important;
+}
+
+.checkbox {
+  font-size: 12px !important;
+}

@@ -1,0 +1,49 @@
+<?php //%255BApp%255CEntity%255CServicioshabitaciones%255D%255B1%255D
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Table'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Table')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Index'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Index')),
+        clone $p['Doctrine\\ORM\\Mapping\\Index'],
+        clone $p['Doctrine\\ORM\\Mapping\\Index'],
+        clone ($p['Doctrine\\ORM\\Mapping\\Entity'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Entity')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'servicioshabitaciones',
+                'idHabitacion',
+                'servhab.serv',
+                'IDX_4313BF4E76AD8B50',
+            ],
+            'indexes' => [
+                [
+                    $o[1],
+                    $o[2],
+                    $o[3],
+                ],
+            ],
+            'columns' => [
+                1 => [
+                    'idHabitacion',
+                    'idServicio',
+                ],
+                [
+                    'idServicio',
+                ],
+                [
+                    'idHabitacion',
+                ],
+            ],
+            'repositoryClass' => [
+                4 => 'App\\Repository\\ServicioshabitacionesRepository',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[4],
+    ],
+    []
+); }];

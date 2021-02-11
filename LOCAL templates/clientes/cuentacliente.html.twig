@@ -1,0 +1,210 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+   <link rel="stylesheet" type="text/css" href="/css/customer.css">
+   <link rel="stylesheet" type="text/css" href="/css/modal.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row py-4 ml-1" style="height: 20%"></div>
+  <div class="row justify-content-center">
+    <div id="left-menu" class="col-10 col-lg-2 pr-0">
+      <button class="btn btn-primary btn-home" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filtrar</button>
+      <div class="collapse" id="collapseExample">
+        <div class="card-body px-0">
+          <a href="/registrousuario/cuentacliente/{{customerid}}" class="link-n">Todo</a>
+          <hr class="mr-4 my-1">
+          {% for val in hostingtype %}
+          <a href="/registrousuario/cuentacliente/{{customerid}}/{{val.id}}" class="link-n">{{val.nombre}}</a>
+          <hr class="mr-4 my-1">
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-10">
+      <div id="rowbase"class="row justify-content-center">
+        {% for item in reserves %}
+        <div class="col-11 px-0">
+          <div class="row ml-3 my-2 result-hist">
+            <div class="col-lg-3 col-12 p-2" align="left">
+              {% set path = "/img/ico/dog_chihuahua_bone.ico" %}
+              {% if item.nombrefichero != "dog_boxer.ico" %}
+                {% set path ="/img/host/" ~ item.idhabitacion ~ "/" ~ item.nombrefichero  %}
+              {% endif %}
+              <img src="{{ path }}" class="center-img mx-auto" style="width:11rem; height:7rem">
+            </div>
+            <div class="col-lg-6 col-12 p-2" align="center">
+              <h3 class="mt-1 mb-2 text-body">{{ item.nombrehospedaje }}</h3>
+              <h5 class="mt-1 mb-2 text-body">{{ item.nombrehabitacion }}</h5>
+              {% set var = item.mediaValoracion %}
+              {% if var != 0 %}
+                <p class="text-body mb-0 mt-2">Valoracion: 
+                  {% for i in 1..var %} 
+                  <span class="fa fa-star checked text-warning" id="star{{i}}"></span>
+                  {% endfor %}
+                </p>
+              {% else %}
+                <p class="text-body mb-0 mt-2">Valoracion:</p>
+              {% endif %}
+              <a id="btn-search" name="search" href="/habitaciones/detalle/{{ item.idhabitacion }}?cuentacliente={{ customerid }}"class="btn btn-primary btn-home btn-sm my-3">+Info</a>
+            </div>
+            <div id="comment-div" class="col-lg-3 col-12 my-auto" >
+              <a id="comment-link-{{ item.idhabitacion }}" href="" class="link-n" data-toggle="modal" data-target="#comment-modal" idhabitacion="{{ item.idhabitacion }}" style="pointer-events:none">Añadir comentario</a>
+              {# {{dump(item.idhabitacion) }} #}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% set resultmodal = "hide" %}
+  {% if pagestotal != false %}
+  <div class="row pb-4" style="height: 20%">
+    <div class="col-12 pt-5">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center pl-0">
+          <li class="page-item"><a class="page-link" href="/registrousuario/cuentacliente/{{customerid}}?page={{ prev }}">Anterior</a></li>
+          {% for i in 1..pagestotal %}
+            {% set active = "" %}
+            {% if page == i %}
+              {% set active = "active" %}
+            {% endif %}
+          <li class="page-item {{ active }}">
+            <a class="page-link" href="/registrousuario/cuentacliente/{{customerid}}?page={{i}}">{{ i }}</a>
+          </li>
+          {% endfor %}
+          <li class="page-item"><a class="page-link" href="/registrousuario/cuentacliente/{{customerid}}?page={{next}}">Siguiente</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<!--Modal no hay resultado-->
+<div id="result-modal" class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title">0 Resultados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="/img/ico/dog_pug.ico" style="float:left">
+        {% if typehosting == null %}
+          {% set message = "No hay ninguna reserva" %}
+          <input id="message" type="hidden" value="false"></input>
+        {% else %}
+          {% set index = typehosting - 1 %}
+          {% set nametypehosting = hostingtype[index].nombre %}
+          {% set message = "No hay ninguna reserva de " ~ nametypehosting %}
+          
+        {% endif %}
+        <input id="mensaje" type="hidden" value=""></input>
+        <p id="modal-text" class="modal-text mt-3">{{ message }} </p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal comentarios-->
+<div id="comment-modal"class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title">Comentarios </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <form action="{{ path('insertarComentario')}}" method="post">
+          <div class="row justify-content-center">
+            <div class="col-10 pt-2">
+              <textarea id="comment-textarea" name="comment-textarea" rows="8" cols="50" required></textarea>
+            </div>
+            <div class="col-10">
+              <div class="form-group mt-2 mb-0">
+                <label >Valoración</label>
+                <div class="">
+                  <input id="customerid" type="hidden" name="customerid" value="{{ customerid }}"></input>
+                  <input id="roomid" type="hidden" name="roomid" value=""></input>
+                  <span class="fa fa-star-o" id="star6"></span>
+                  <span class="fa fa-star-o" id="star7"></span>
+                  <span class="fa fa-star-o" id="star8"></span>
+                  <span class="fa fa-star-o" id="star9"></span>
+                  <span class="fa fa-star-o" id="star10"></span>
+                  <input id="rating-input" name="rating-input" type="hidden" value=""></input>
+                </div>
+              </div>  
+            </div>
+            <div class="col-10 mt-2">
+              <div class="form-group mt-2 mb-0">
+                <label >Valoración mascotas</label>
+                <div class="">
+                  <span class="fa fa-star-o " id="star11"></span>
+                  <span class="fa fa-star-o " id="star12"></span>
+                  <span class="fa fa-star-o " id="star13"></span>
+                  <span class="fa fa-star-o " id="star14"></span>
+                  <span class="fa fa-star-o " id="star15"></span>
+                  <input id="rating-pets-input" name="rating-pets-input" type="hidden" value=""></input>
+                </div>
+              </div>  
+            </div>
+          </div>      
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-home">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('js/rating.js') }}"></script>  
+  <script>
+    $(document).ready(function (){
+      IniciazlizarCuentaCliente();
+    })
+
+    function IniciazlizarCuentaCliente(){
+      EventosReservas();
+    }
+
+    function EventosReservas(){
+      var control = $('#message').val();
+      var resultmodal = '{{ resultmodal }}';
+      
+      $('#result-modal').modal('{{ resultmodal }}');
+      $('#result-modal').on('hide.bs.modal', function(){
+        if (control == true){
+          location.href = "/usuario/cuentacliente/{{ customerid }}";
+        }else{
+          var img = " <img src='/img/ico/dog_pug.ico' width='400px' heigth='400px'>";
+          $('#rowbase').prepend(img);
+        }
+      });
+
+      $('a[id^=comment-link-]').click(function(e) {
+        var roomid = e.target.getAttribute('idhabitacion');
+        $('#roomid').val(roomid);
+      });
+
+      $('a[id^=comment-link-]').css("pointer-events", "auto");
+    }
+
+  </script>
+{% endblock %}
+

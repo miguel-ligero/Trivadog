@@ -1,0 +1,276 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/provider.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  
+{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="row py-4 ml-1" style="height: 20%"></div>
+  <div class="row justify-content-center">
+    <div id="left-menu" class="col-10 col-lg-2 pr-0">
+      <div>
+        <a id="btn-new" href="/proveedores/cuentaproveedor" class="btn btn-primary mb-2 btn-home " type="button" >Volver</a>
+      </div>
+      <div></div>
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-12 px-0 pb-3">
+          <form id="form-register" action="/hospedaje/alojamiento/guardar" method="post">
+            {% set valinputid = "" %}
+            {% set valinputtypehost = "" %}
+            {% set valinputname = "" %}
+            {% set valinputdescription = "" %}
+            {% set valinputaddress = "" %}
+            {% set valinputcity = "" %}
+            {% set valinputphone = "" %}
+            {% set valinputemail = "" %}
+            {% set valinputproviderid = providerid %}
+            {% set varselect = "" %}
+            {% set valinputadmin1 = "" %}
+            {% set valinputadmin2 = "" %}
+            {% set valinputadmin3 = "" %}
+                            
+            {% if arrayerror is defined or edit == true %}
+              {% set valinputid = host.id %}
+              {% set valinputtypehost = host.idtipohospedaje.id %}
+              {% set valinputname = host.nombre %}
+              {% set valinputdescription = host.descripcion %}
+              {% set valinputaddress = host.direccion %}
+              {% set valinputcity = host.ciudad %}
+              {% set valinputphone = host.telefono %}
+              {% set valinputemail = host.email %}
+              {% set valinputadmin1 = host.admin1code %}
+              {% set valinputadmin2 = host.admin2code %}
+              {% set valinputadmin3 = host.admin3code %}
+              {% set varselect = host.idtipohospedaje.id %}
+            {% endif %}
+            <input type="hidden" class="form-control" id="inputproviderid" name="inputproviderid" nombre="idproveedor"  value="{{ valinputproviderid }}">
+            <input type="hidden" class="form-control" id="inputhiddenaction" name="inputhiddenaction" nombre="inputhiddenaction"  value="{{ edit }}">
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-12 col-lg-5">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Nombre alojamiento</label>
+                  <input type="text" class="form-control" id="inputname" name="inputname" nombre="nombrehospedaje"  value="{{ valinputname }}">
+                  {% if arrayerror["nombrehospedaje"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["nombrehospedaje"]}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-12 col-lg-5">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Tipo hospedaje</label>
+                  <select class="form-control" id="inputhosttype" name="inputhosttype">
+                  {% set selected = ""%}
+                  {% for item in hosttype %}
+                    {% if (item.id == varselect) %} 
+                      {% set selected = "selected" %}
+                    {% endif %}
+                    <option value="{{ item.id }}" {{ selected }}>{{ item.nombre }}</option>
+                  {% set selected = "" %}
+                  {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-1"></div>
+            </div>
+            <div class="row">
+              <input type="hidden" class="form-control" id="inputid" name="inputid" nombre="inputid" value="{{ valinputid }}">
+              <div class="col-1"></div>
+              <div class="col-12 col-lg-10 px-3">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1" >Descripción</label>
+                  <textarea id="inputdescription" name="inputdescription" rows="8"  class="form-control col-12" >{{ host.descripcion }}</textarea>
+                  {% if arrayerror["descripcion"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["descripcion"]}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-1"></div>
+            </div>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-12 col-lg-5 px-3">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Email</label>
+                  <input type="email" class="form-control" id="inputemail" name="inputemail" placeholder="example@email.com" nombre="email" value="{{ valinputemail }}">
+                  {% if arrayerror["email"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["email"]}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-12 col-lg-5 px-3">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Teléfono</label>
+                  <input type="text" class="form-control" id="inputphone" name="inputphone" nombre="telefono"  value="{{ valinputphone }}">
+                  {% if arrayerror["telefono"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["telefono"]}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-1"></div>
+            </div>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-12 col-lg-7">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Dirección</label>
+                  <input type="text" class="form-control" id="inputaddress" name="inputaddress"  nombre="direccion" value="{{ valinputaddress }}">
+                  {% if arrayerror["direccion"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["direccion"]}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-12 col-lg-3"></div>
+              <div class="col-1"></div>
+            </div>
+            <div class="row">
+              <div class="col-1"></div>
+                <div class="col-12 col-lg-3">
+                  <label for="exampleFormControlInput1">Comunidad Autónoma:</label>
+                  <select class="form-control" name="autonomia" id="autonomia" >
+                  <option value="">Seleccione Autonomía</option>
+                    {% for geocomunidad in geocomunidades %}
+                      <option value="{{geocomunidad.admin1code}}">{{geocomunidad.name}}</option>
+                    {% endfor %}
+                  </select>
+                  {% if arrayerror["autonomia"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["autonomia"]}}</p>
+                  {% endif %}
+                  <input name="inputhiddenadmin1" type="hidden" value="{{ valinputadmin1 }}">
+                </div>
+                <div class="col-12 col-lg-3">
+                  <label for="exampleFormControlInput1">Provincias:</label>
+                  <select class="form-control" name="provincias" id="provincias"  disabled>
+                    <option value="">Seleccione Provincia</option>
+                  </select>
+                  {% if arrayerror["provincias"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["provincias"]}}</p>
+                  {% endif %}
+                  <input name="inputhiddenadmin2" type="hidden" value="{{ valinputadmin2 }}">
+                </div>
+                <div class="col-12 col-lg-3">
+                  <label for="exampleFormControlInput1">Población:</label>
+                  <select class="form-control" name="poblacion" id="poblacion" disabled>
+                    <option value="">Seleccione Poblacion</option>
+                  </select>
+                  {% if arrayerror["poblacion"] is defined %}
+                    <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["poblacion"]}}</p>
+                  {% endif %}
+                  <input name="inputhiddenadmin3" type="hidden" value="{{ valinputadmin3 }}">
+                </div>
+              <div class="col-1"></div>
+            </div>
+            <div class="row pb-4">
+              <div class="col-1"></div>
+              <div class="col-12 col-lg-10">
+                <button id="btn-send" type="submit" class="btn btn-primary btn-lg btn-home mt-4" control="On" data-toggle="tooltip" title="Por favor, complete el formulario">Guardar</button>
+              </div>
+              <div class="col-1"></div>
+            </div>
+          </form>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div id="myModal"class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="" style="float:left">
+        <p id="modal-text" class="modal-text mt-3"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  
+  {% set modal = 'hide' %}
+  {% set message = "" %}
+  {% set img = "" %}
+  {% set title = "" %}
+  
+  {% if querystatus == 'new' %}
+    {% set modal = 'show' %}
+    {% set message = 'Registro realizado satisfactoriamente.' %}
+    {% set img = '/img/ico/dog_pilot.ico' %}
+    {% set title = 'Datos guardados!!' %}
+  {% elseif querystatus == 'edit' %}
+    {% set modal = 'show' %}
+    {% set message = 'Modificación realizada satisfactoriamente.' %}
+    {% set img = '/img/ico/dog_fitness.ico' %}
+    {% set title = 'Datos guardados!!' %}
+  {% elseif querystatus == 'error' %}
+    {% set modal = 'show' %}
+    {% set message = 'Fallo en la conexión. No se ha podido realizar el registro. Por favor, vuelva a intentarlo.' %}
+    {% set img = '/img/ico/dog_scream.ico' %}
+    {% set title = 'Error!!' %}
+  {% elseif querystatus == 'faltan' %}
+    {% set modal = 'show' %}
+    {% set message = 'Faltan datos o no tienen un formato válido.' %}
+    {% set img = '/img/ico/dog_scream.ico' %}
+    {% set title = 'Error!!' %}
+  {% endif %}
+  
+  <script>
+    $(document).ready(function (){
+      InicializarModal();
+    });
+
+    function InicializarModal () {
+      var statusmodal = '{{ querystatus }}';
+      var img = '{{ img }}';
+      var title = '{{ title }}';
+      if (statusmodal == 'new'){
+        url = "/proveedores/cuentaproveedor";
+      }else if (statusmodal == 'edit'){
+        url = "/proveedores/cuentaproveedor";
+      }else if (statusmodal == 'error'){
+        url = "/hospedaje/alojamiento/editar/{{ host.id }}";
+        getComunidades();
+      }else if (statusmodal == 'faltan'){
+        if ('{{ host.id }}' != ""){
+          url = "/hospedaje/alojamiento/editar/{{ host.id }}";
+        }else{
+          url = "/hospedaje/alojamiento/nuevo";
+          getComunidades();
+        }
+      }
+      $('#modal-title').text(title);
+      $('#modal-img').attr('src', img);
+      $('#modal-text').text('{{ message }}');
+      $('#myModal').modal('{{ modal }}');
+      $('#myModal').on('hide.bs.modal', function(){
+        if (statusmodal == 'faltan'){
+          CargaLocalStorage();
+          getComunidades();
+          return;
+        }else{
+          localStorage.clear();
+          location.href = url;
+        }
+      });
+    }
+  </script>
+  <script src="/js/registrohospedaje.js"></script>
+{% endblock %}
+

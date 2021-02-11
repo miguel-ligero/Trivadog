@@ -1,0 +1,27 @@
+.back-img {
+  background-color: rgb(214, 214, 214);
+}
+
+#comment-link {
+  color: black;
+  font-weight: 600;
+}
+
+#comment-link:hover {
+  background: #9dc66b7e !important;
+  color: black;
+}
+
+.card-body.row {
+  margin: 0px;
+  border-top: 3px solid #9dc66b;
+  border-left: 3px solid #9dc66b;
+  border-right: 3px solid #4361c2;
+  border-bottom: 3px solid #4361c2;
+}
+
+p.card-text {
+  color: black;
+  font-weight: 600;
+  font-size: 1.15rem;
+}

@@ -1,0 +1,295 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="http://trivadog.mipropia.com/trivadog/public/css/result.css">
+    <link rel="stylesheet" type="text/css" href="http://trivadog.mipropia.com/trivadog/public/css/modal.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+     <div class="row align-items-center py-4" style="height: 20%">
+        <div class="col-12 ">
+            <form action="http://trivadog.mipropia.com/trivadog/public/habitaciones/busqueda" method="post">
+                <div class="form-row ">
+                    <div class="col-md-6 col-lg-3  pt-2">
+                        <input id="auComplete" name="destination" type="text" class="form-control form-control-sm search" placeholder="Destino" value="{{ destination }}" required>
+                    </div>
+                    <div class="col-md-6 col-lg-2  pt-2">
+                        <select id="typehosting"name="typehosting" class="custom-select form-control-sm search" placeholder="">
+                            <option value=""></option>
+                            {% set selected = ""%}
+                            {% for item in hostingtype %}
+                                {% if (item.id == typehosting) %} 
+                                    {% set selected = "selected" %}
+                                {% endif %}
+                            <option value="{{ item.id }}" {{ selected }}>{{ item.nombre }}</option>
+                            {% set selected = "" %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-lg-1 pt-2">
+                        <input id="inputfrom" name="inputfrom" type="text" class="form-control form-control-sm search-date" placeholder="Desde" value="{{ fromdatapicker }}" required>
+                    </div>
+                    <div class="col-md-3 col-lg-1 pt-2">
+                        <input id="inputto" name="inputto" type="text" class="form-control form-control-sm search-date" placeholder="Hasta" value="{{ todatapicker }}" required>
+                    </div>
+                    <div class="col-md-3 col-lg-1 pt-2">
+                        <input id="adults" name="adults" type="text" class="form-control form-control-sm search" placeholder="Adultos" value="{{ adults }}">
+                    </div>
+                    <div class="col-md-3 col-lg-1 pt-2">
+                        <input id="children" name="children" type="text" class="form-control form-control-sm search" placeholder="Niños" value="{{ children }}">
+                    </div>
+                    <div class="col-md-6 col-lg-1 pt-2">
+                        <input id="pets" name="pets" type="text" class="form-control form-control-sm search" placeholder="Mascotas" value="{{ pets }}">
+                    </div>
+                    <div class="col-md-4 col-lg-1 pt-2 mr-0">
+                        <button id="btnsearch" name="btnsearch" type="submit" class="btn btn-primary btn-home btn-sm">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-md-center" style="min-height:32rem">
+    {% if modalmessage is defined and modalmessage == false %}
+        {% set j = 1 %}
+        {% for item in host %}
+        <div class="col-12 pb-2 " style="min-height: 5rem">
+            <div class="media row outline-secondary result-link result-frame mx-auto">
+                <div class="media-body col-12 col-lg-3 align-self-center ">
+                    <div id="carouselExampleControls{{j}}" class="carousel slide mx-auto" data-ride="carousel" style="width:12rem; height:7rem">
+                        <div class="carousel-inner">
+                            {% set i = 1 %}
+                            {% set active = "active" %}
+                            {% for val in imagenes %}
+                                {% set path = "http://trivadog.mipropia.com/trivadog/public/img/ico/dog_chihuahua_bone.ico" %}
+                                    {% if val.nombrefichero != "dog_boxer.ico" %}
+                                        {% set path ="http://trivadog.mipropia.com/trivadog/public/img/host/"~ val.idHabitacion ~"/"~ val.nombrefichero %}
+                                    {% endif %}
+                                {% if item.idHabitacion == val.idHabitacion %}
+                                <div id="carousel{{i}}" class="carousel-item {{active}}">
+                                    <img src="{{ path }}" class="" alt="Imagen habitación {{ item.idHabitacion }}" style="width:12rem; height:7rem">
+                                </div>
+                                {% set active = "" %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls{{j}}" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls{{j}}" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <a class="link-result col-12 col-lg-6 mt-2 align-self-center" href="http://trivadog.mipropia.com/trivadog/public/habitaciones/busquedaHabitacion/{{ page }}?destination={{ destination}}&typehosting={{ typehosting }}&from={{ from }}&to={{ to }}&page={{ page }}&host='{{ item.nombreHotel }}'&adults={{ adults }}&children={{ children }}&pets={{ pets }}" width="25rem">
+                    <div class="media-body col-12 align-self-center">
+                        <h3 class="mt-1 text-body text-center">{{ item.nombreHotel }}</h3>
+                        <h5 class="mt-1 text-body text-center">{{ item.direccion }}</h5>
+                    </div>
+                </a>
+                <div class="media-body col-12 col-lg-6 align-self-center mt-2">
+                    {% set varcom = item.numComentarios %}
+                    {% if (varcom == "") %}
+                        {% set varcom = 0 %}
+                    {% endif %}
+                    <p class="text-right">{{ varcom }} Comentarios</p>
+                    {% set var = item.mediaValoracion %}
+                    {% if var != 0 %}
+                        <p class="text-right">
+                            {% for i in 1..var %} 
+                                <span class="fa fa-star checked text-warning" id="star{{i}}"></span>
+                            {% endfor %}
+                            Valoracion
+                        </p>
+                    {% else %}
+                        <p class="text-right">Valoracion</p>
+                    {% endif %}
+                    {% set varmas = item.mediaValoracionMascotas %}
+                    {% if varmas != 0 %}
+                        <p class="text-right">
+                            {% for i in 1..varmas %} 
+                                <span class="fa fa-star checked text-warning" id="star{{i}}"></span>
+                                
+                            {% endfor %}
+                            Valoracion mascotas
+                        </p>
+                    {% else %}
+                        <p class="text-right">Valoracion mascotas</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% set j = j + 1 %}
+        {% endfor %}
+    </div>
+    <div class="row pb-4" style="height: 20%">
+        <div class="col-12 pt-5">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center pl-0">
+                    <li class="page-item"><a class="page-link" href="{{ path("busqueda", {page: prev }) }}?destination={{ destination }}&typehosting={{ typehosting }}&from={{ from }}&to={{ to }}&adults={{ adults }}&children={{ children }}&pets={{ pets }}">Anterior</a></li>
+                    {% for i in 1..pagestotal %}
+                        {% set active = "" %}
+                        {% if page == i %}
+                            {% set active = "active" %}
+                        {% endif %}
+                        <li class="page-item {{ active }}">
+                            <a class="page-link" href="{{ path("busqueda", {page: i}) }}?destination={{ destination }}&typehosting={{ typehosting }}&from={{ from }}&to={{ to }}&adults={{ adults }}&children={{ children }}&pets={{ pets }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item"><a class="page-link" href="{{ path("busqueda", {page: next}) }}?destination={{ destination }}&typehosting={{ typehosting }}&from={{ from }}&to={{ to }}&adults={{ adults }}&children={{ children }}&pets={{ pets }}">Siguiente</a></li>
+                </ul>
+            </nav>
+	    </div>
+        <div class="col-12 justify-content-center">
+            <div class="w-25 mx-auto mt-5 btn-registry">
+                <a class="btn btn-primary mb-4 btn-home btn-registry" href="http://trivadog.mipropia.com/trivadog/public/proveedores/index" role="button">Registra tu negocio</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+</div>
+
+<!--Modal no hay resultado-->
+<div id="result-modal" class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title">0 Resultados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="http://trivadog.mipropia.com/trivadog/public/img/ico/dog_pug.ico" style="float:left">
+        <p id="modal-text" class="modal-text mt-3">No hay disponible ningún alojamiento de las características solicitadas. Pruebe otras opciones. </p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {% set modal = 'hide' %}
+    {% if modalmessage == true %}
+        {% set modal = 'show' %}
+    {% endif %}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('js/datepicker.js') }}"></script>
+    <script>
+        $(document).ready(function (){
+            $('#result-modal').modal('{{ modal }}');
+            $('#result-modal').on('hide.bs.modal', function(){
+                location.href = "http://trivadog.mipropia.com/trivadog/public/";
+            });
+            
+            var check = $('#typehosting').val();
+            if (check == 3) {
+                $('#adults').attr('disabled', 'disabled');
+                $('#children').attr('disabled', 'disabled');
+                $('#pets').attr('disabled', 'disabled');
+            }else{
+                $('#adults').removeAttr('disabled');
+                $('#children').removeAttr('disabled');
+                $('#pets').removeAttr('disabled');
+            }
+
+            $('#typehosting').on('change', function() {
+                var check = $('#typehosting').val();
+                if (check == 3) {
+                    $('#adults').attr('disabled', 'disabled');
+                    $('#children').attr('disabled', 'disabled');
+                    $('#pets').attr('disabled', 'disabled');
+                }else{
+                    $('#adults').removeAttr('disabled');
+                    $('#children').removeAttr('disabled');
+                    $('#pets').removeAttr('disabled');
+                }
+            });
+        localStorage.clear();
+            localStorage.setItem("auComplete", "vacio");
+            localStorage.setItem("typehosting", "vacio");
+            localStorage.setItem("inputfrom", "vacio");
+            localStorage.setItem("inputto", "vacio");
+        });
+
+        //Se inicializa al seleccionar el destino del autocomplete
+    function InicializarFormulario() {
+        EventosFormulario();
+    }
+
+    function EventosFormulario() {
+        //La primera vez se actualiza el local storage al devolver el json la peticion AJAX del autocomplete
+        $('#auComplete').on('blur', function () {
+            StorageUpdate(this);
+        });
+        
+        $('#typehosting').on({
+            blur: function () {
+                StorageUpdate(this);
+            },
+            change: function() {
+                var check = $('#typehosting').val();
+                if (check == 3) {
+                    $('#adults').attr('disabled', 'disabled');
+                    $('#children').attr('disabled', 'disabled');
+                    $('#pets').attr('disabled', 'disabled');
+                }else{
+                    $('#adults').removeAttr('disabled');
+                    $('#children').removeAttr('disabled');
+                    $('#pets').removeAttr('disabled');
+                }
+            }, 
+        });
+
+        $('#inputfrom').on('change', function () {
+            StorageUpdate(this);
+        });
+
+        $('#inputto').on('change', function () {
+            StorageUpdate(this);
+        });
+    }
+    
+    function StorageUpdate(input){
+        //Se mira si el input tiene algun dato, y si es así se almacena en el local storage el id del input
+        //y "ok"
+        $("#btnsearch").attr('disabled', 'disabled');
+        var data = input.value;
+        var input = input.id;
+        if (data != ""){
+            localStorage.setItem(input, "ok");
+        }else{
+            localStorage.setItem(input, "vacio");
+        }
+        //Se comprueba que todos los inputs obligatorios del formulario esten rellenados
+        CheckForm();
+    }
+
+    function CheckForm(){
+        //Se obtienen todos los items del local storage y se comprueba que el valor sea "ok". Si es
+        //así, se habilita el botón del formulario
+        checkauComplete = localStorage.getItem("auComplete");
+        checktypehosting = localStorage.getItem("typehosting");
+        checkfrom = localStorage.getItem("inputfrom");
+        checkto = localStorage.getItem("inputto");
+
+        if (
+            checkauComplete == "ok" &&
+            checktypehosting == "ok" &&
+            checkfrom == "ok" &&
+            checkto == "ok"
+        ) {
+            $("#btnsearch").removeAttr("disabled");
+        }
+    }
+    </script>
+{% endblock %}

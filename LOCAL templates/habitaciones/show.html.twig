@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Habitaciones{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Detalles Habitación</h1>
+
+    <a class="btn btn-primary mb-4 btn-home" href="{{ path('habitaciones_index') }}">Volver</a>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ habitacione.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ habitacione.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Numadultos</th>
+                <td>{{ habitacione.numadultos }}</td>
+            </tr>
+            <tr>
+                <th>Numinfantiles</th>
+                <td>{{ habitacione.numinfantiles }}</td>
+            </tr>
+            <tr>
+                <th>Nummascotas</th>
+                <td>{{ habitacione.nummascotas }}</td>
+            </tr>
+            <tr>
+                <th>Mediavaloracion</th>
+                <td>{{ habitacione.mediavaloracion }}</td>
+            </tr>
+            <tr>
+                <th>Mediavaloracionmascotas</th>
+                <td>{{ habitacione.mediavaloracionmascotas }}</td>
+            </tr>
+            <tr>
+                <th>Numcomentarios</th>
+                <td>{{ habitacione.numcomentarios }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ habitacione.precio }}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{{ habitacione.fechacreacion ? habitacione.fechacreacion|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{{ habitacione.activo ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary mb-4 btn-home" href="{{ path('habitaciones_edit', {'id': habitacione.id}) }}">Editar</a>
+</div>
+{% endblock %}

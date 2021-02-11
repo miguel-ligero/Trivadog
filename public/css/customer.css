@@ -1,0 +1,36 @@
+.title-link:hover{
+  text-decoration: none;
+  
+}
+
+.result-hist {
+  background-color: rgb(240, 240, 240);
+  border-top: 3px solid #9dc66b;
+  border-left: 3px solid #9dc66b;
+  border-right: 3px solid #4361c2;
+  border-bottom: 3px solid #4361c2;
+}
+
+.center-img {
+  margin: 10px auto;
+  display: block;
+}
+
+#comment-div {
+  text-align: right;
+}
+
+@media (max-width: 992px) {
+  #comment-div {
+    text-align: center;
+    margin-bottom: 30px !important;
+  }
+}
+
+.checked {
+  color: rgb(255, 193, 7);
+}
+
+.fa-star-o {
+  color: rgb(255, 193, 7) !important;
+}

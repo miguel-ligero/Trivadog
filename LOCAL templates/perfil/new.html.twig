@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Perfil{% endblock %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Crear Perfil</h1>
+    <a class="btn btn-primary mb-4 btn-home" href="{{ path('perfil_index') }}">Volver</a>
+    {{ include('perfil/_form.html.twig') }}
+
+    
+</div>
+{% endblock %}

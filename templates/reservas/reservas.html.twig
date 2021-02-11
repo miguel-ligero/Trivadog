@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="http://trivadog.mipropia.com/trivadog/public/css/main.css">
+  <link rel="stylesheet" type="text/css" href="http://trivadog.mipropia.com/trivadog/public/css/reserve.css">
+  <link rel="stylesheet" type="text/css" href="http://trivadog.mipropia.com/trivadog/public/css/modal.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row align-items-center py-4" style="height: 20%">
+  </div>
+  <div class="row justify-content-center" style="min-height: 500px">
+    <div class="col-12 ">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h3 class="card-title text-center">{{ room.idHospedaje.nombre }}</h3>
+              <h4 class="card-title text-center">{{ room.nombre }}</h4>
+              <hr class="">
+              <form id="form-reserve" method="post" action="http://trivadog.mipropia.com/trivadog/public/reservas/confirm">
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-5 pb-2">
+                    <p class="card-text font-weight-bold my-1">Desde</p>
+                    <input id="inputfromdatapicker" name="inputfromdatapicker" type="text" class="form-control form-control-sm search-date" placeholder="Desde" value="{{ fromdatapicker }}" readonly>
+                  </div>
+                  <div class="col-5 pb-2">
+                    <p class="card-text font-weight-bold my-1">Hasta</p>
+                    <input id="ininputtodatapickerputto" name="inputtodatapicker" type="text" class="form-control form-control-sm search-date" placeholder="Hasta" value="{{ todatapicker }}" readonly>
+                  </div>
+                </div>
+                <hr class="">
+                <div class="row">
+                  <div class="col-1"></div>
+                  {% if typehosting != 3 %}
+                    <div class="col-3 ">
+                      <p class="card-text font-weight-bold mt-2">Adultos</p>
+                      <p class="card-text font-weight-bold">Niños</p>
+                      <p class="card-text font-weight-bold mb-2">Mascotas</p>
+                    </div>
+                  <div class="col-2 ">
+                    <p class="card-text">{{ adults }}</p>
+                    <p class="card-text">{{ children }}</p>
+                    <p class="card-text">{{ pets }}</p>
+                  </div>
+                  {% endif %}
+                </div>
+                <hr class="">
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-lg-3 col-6">
+                    <p class="card-text font-weight-bold my-2">Precio por noche</p>
+                  </div>
+                  <div class="col-lg-8 col-5">
+                    <p class="card-text my-2">{{ room.precio }}<span>€</span></p>
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-lg-3 col-6 ">
+                    <p class="card-text font-weight-bold my-2">Precio total</p>
+                  </div>
+                  <div class="col-lg-8 col-5 ">
+                  {% if reserves is defined %}
+                    {% set precio = dbprice %}
+                  {% else %}
+                    {% set precio = room.precio %}
+                  {% endif %}
+                  {% set preciototal = precio * days %}
+                    <p class="card-text my-2">{{ preciototal }}<span>€</span></p>
+                  </div>
+                </div>
+                <hr class="">
+                <div class="row justify-content-center">
+                  <div class="col-md-3 col-5 m-1 mt-2">
+                    <div><a href="http://trivadog.mipropia.com/trivadog/public/habitaciones/detalle/{{ room.id }}?destination={{ destination }}&typehosting={{ typehosting }}&from={{ from }}&to={{ to }}&adults={{ adults }}&children={{ children }}&pets={{ pets }}&days={{ days }}" class="btn btn-primary btn-home">Volver</a></div>
+                  </div>
+                  <div class="col-md-3 col-5 m-1 mt-2">
+                    <div>
+                      <input id="inputcustomerid" name="inputcustomerid" type="hidden"  class="form-control" value="{{ app.user.email }}">
+                      <input id="inputroomid" name="inputroomid" type="hidden"  class="form-control" value="{{ room.id }}">
+                      <input id="inputfrom" name="inputfrom" type="hidden"  class="form-control" value="{{ from }}">
+                      <input id="inputto" name="inputto" type="hidden"  class="form-control" value="{{ to }}">
+                      <input id="inputadults" name="inputadults" type="hidden"  class="form-control" value="{{ adults }}">
+                      <input id="inputchildren" name="inputchildren" type="hidden"  class="form-control" value="{{ children }}">
+                      <input id="inputpets" name="inputpets" type="hidden"  class="form-control" value="{{ pets }}">
+                      <input id="days" name="days" type="hidden"  class="form-control" value="{{ days }}">
+                      <input id="precio" name="precio" type="hidden"  class="form-control" value="{{ room.precio }}">
+                      <input id="destination" name="destination" type="hidden" class="form-control" value="{{ destination }}">
+                      <input id="typehosting" name="typehosting" type="hidden" class="form-control" value="{{ typehosting }}">
+                      <button name="form-reserve" type="submit" class="btn btn-primary btn-home">Confirmar</button>
+                    </div>
+                  </div>
+                </div>
+              <form>  
+            </div>
+          </div>
+        </div>
+        <div class="col-1"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row pb-4" style="height: 20%">
+  </div>
+</div>
+
+<!--Modal-->
+<div id="myModal"class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title">Reservas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="http://trivadog.mipropia.com/trivadog/public/img/ico/dog_dalmatian.ico" style="float:left">
+        <p id="modal-text" class="modal-text mt-3">Reserva realizada con éxito</p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {% set modal = 'hide' %}
+  {% set url = "" %}
+  {% if reserves is defined %}
+    {% set modal = 'show' %}
+    {% set url = reserves.idcliente.id %}
+  {% endif %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{{ asset('js/datepicker.js') }}"></script>
+  <script src="http://trivadog.mipropia.com/trivadog/public/js/registrousuario.js"></script>
+  <script>
+    $(document).ready(function (){
+      $('#myModal').modal('{{ modal }}');
+      $('#myModal').on('hide.bs.modal', function(){
+        location.href = "http://trivadog.mipropia.com/trivadog/public/registrousuario/cuentacliente/{{ url }}";
+      });
+    });
+  </script>
+{% endblock %}

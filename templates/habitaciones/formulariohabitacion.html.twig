@@ -1,0 +1,222 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="http://trivadog.mipropia.com/trivadog/public/css/provider.css">
+   <link rel="stylesheet" href="http://trivadog.mipropia.com/trivadog/public/css/modal.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row py-4 ml-1" style="height: 20%"></div>
+    <div class="row justify-content-center">
+      <div id="left-menu" class="col-10 col-lg-2 pr-0">
+        <div>
+          <a id="btn-new" href="http://trivadog.mipropia.com/trivadog/public/proveedores/cuentaproveedor/{{ page }}" class="btn btn-primary mb-2 btn-home " type="button" >Volver</a>
+        </div>
+        <div> 
+          {% set disable = "" %}
+          {% if room.id is empty %}
+            {% set disable = "hidden" %}
+          {% endif %}
+          <a id="btn-new" href="" class="btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-nuevo" aria-expanded="false" aria-controls="collapseExample" {{ disable }}>Editar</a>
+          <div class="collapse" id="collapse-nuevo">
+            <div class="card-body pt-0 menu-pos">
+              <a href="http://trivadog.mipropia.com/trivadog/public/proveedores/habitacion/editar/{{ room.id }}" class="menu">Datos habitación</a>
+              <hr class="my-1">
+              <a href="http://trivadog.mipropia.com/trivadog/public/servicioshabitaciones/formularioservicios/{{ room.id }}" class="menu">Servicios</a>
+              <hr class="my-1">
+              <a href="http://trivadog.mipropia.com/trivadog/public/multimedia/{{ room.id }}" class="menu">Imagenes</a>
+              <hr class="my-1">
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+      <div class="col-10">
+        <div class="row">
+          <div class="col-12 px-0 pb-3">
+            <form id="form-register" action="http://trivadog.mipropia.com/trivadog/public/proveedores/habitacion/guardar" method="post">
+              {% set valinputid = "" %}
+              {% set valinputname = "" %}
+              {% set valinputadults = "" %}
+              {% set valinputchildren = "" %}
+              {% set valinputpets = "" %}
+              {% set valinputprice = "" %}
+              {% set valinputhostid = "" %}
+              {% set valinputhostname = "" %}
+              
+              {% if arrayerror is not empty or edit == true %}
+                {% set valinputid = room.id %}
+                {% set valinputname = room.nombre %}
+                {% set valinputadults = room.numadultos %}
+                {% set valinputchildren = room.numinfantiles %}
+                {% set valinputpets = room.nummascotas %}
+                {% set valinputprice = room.precio %}
+                {% if edit == false %}
+                  {% set valinputhostname = hostname[0].nombre %}
+                  {% set valinputhostid = hostname[0].id %}
+                {% else %}
+                  {% set valinputhostname = room.idhospedaje.nombre %}
+                  {% set valinputhostid = room.idhospedaje.id %}
+                {% endif %}
+              {% endif %}
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-12 col-lg-5">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Nombre hospedaje</label>
+                    {% set statusinput = "" %}
+                    {% if edit == true %}
+                      {% set statusinput = "readonly" %}
+                      <input type="text" class="form-control" id="inputhostname" name="inputhostname" nombre="namehospedaje"  value="{{ valinputhostname }}" {{ statusinput }}>
+                      <input type="hidden" class="form-control" id="inputhostid" name="inputhostid" nombre="idhospedaje"  value="{{ valinputhostid }}">
+                      {% if arrayerror["idhospedaje"] is defined %}
+                        <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["idhospedaje"]}}</p>
+                      {% endif %}
+                    {% else %}
+                      <select class="form-control" id="inputhostid" name="inputhostid">
+                      {% for item in hostname %}
+                        <option value="{{ item.id }}">{{ item.nombre }}</option>
+                      {% endfor %}
+                      </select>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-1"></div>
+              </div>
+              <div class="row">
+                <input type="hidden" class="form-control" id="inputid" name="inputid" nombre="inputid" value="{{ valinputid }}">
+                <div class="col-1"></div>
+                <div class="col-12 col-lg-10 px-3">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Nombre habitacion</label>
+                    <input type="text" class="form-control" id="inputname" name="inputname" nombre="nombre" value="{{ valinputname }}">
+                    {% if arrayerror["nombre"] is defined %}
+                      <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["nombre"]}}</p>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-12 col-lg-5 px-3">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Número adultos</label>
+                    <input type="text" class="form-control" id="inputadults" name="inputadults" placeholder="" nombre="adultos" value="{{ valinputadults }}">
+                    {% if arrayerror["numadultos"] is defined %}
+                      <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["numadultos"]}}</p>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-12 col-lg-5 px-3">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Número niños</label>
+                    <input type="text" class="form-control" id="inputchildren" name="inputchildren" nombre="infantiles"  value="{{ valinputchildren }}">
+                    {% if arrayerror["numinfantiles"] is defined %}
+                      <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["numinfantiles"]}}</p>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-12 col-lg-5">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Número mascotas</label>
+                    <input type="text" class="form-control" id="inputpets" name="inputpets"  nombre="mascotas" value="{{ valinputpets }}">
+                    {% if arrayerror["nummascotas"] is defined %}
+                      <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["nummascotas"]}}</p>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Precio</label>
+                    <input type="text" class="form-control" id="inputprice" name="inputprice"  nombre="precio" value="{{ valinputprice }}" >
+                    {% if arrayerror["precio"] is defined %}
+                      <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["precio"]}}</p>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-12 col-lg-10"></div>
+                <div class="col-1"></div>
+              </div>
+              <div class="row pb-4">
+                <div class="col-1"></div>
+                <div class="col-12 col-lg-10">
+                  <button id="btn-send" type="submit" class="btn btn-primary btn-lg btn-home ml-2">Guardar</button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal-->
+<div id="myModal"class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="" style="float:left">
+        <p id="modal-text" class="modal-text mt-3"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {% set modal = 'hide' %}
+  {% set message = "" %}
+  {% set img = "" %}
+  {% set title = "" %}
+  {% if querystatus == 'new' %}
+    {% set modal = 'show' %}
+    {% set message = 'Registro realizado satisfactoriamente. Ahora puede agregar fotos y servicios' %}
+    {% set img = 'http://trivadog.mipropia.com/trivadog/public/img/ico/dog_pilot.ico' %}
+    {% set title = 'Datos guardados!!' %}
+  {% elseif querystatus == 'edit' %}
+    {% set modal = 'show' %}
+    {% set message = 'Modificación realizada satisfactoriamente.' %}
+    {% set img = 'http://trivadog.mipropia.com/trivadog/public/img/ico/dog_fitness.ico' %}
+    {% set title = 'Datos guardados!!' %}
+  {% elseif querystatus == 'error' %}
+    {% set modal = 'show' %}
+    {% set message = 'No se ha podido realizar el registro. Por favor, vuelva a intentarlo.' %}
+    {% set img = 'http://trivadog.mipropia.com/trivadog/public/img/ico/dog_scream.ico' %}
+    {% set title = 'Error!!' %}
+  {% endif %}
+  
+  <script>
+    $(document).ready(function (){
+      var statusmodal = '{{ querystatus }}';
+      var img = '{{ img }}';
+      var title = '{{ title }}';
+      $('#modal-title').text(title);
+      $('#modal-img').attr('src', img);
+      $('#modal-text').text('{{ message }}');
+      $('#myModal').modal('{{ modal }}');
+    });
+  </script>
+{% endblock %}

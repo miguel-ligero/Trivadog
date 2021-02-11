@@ -1,0 +1,250 @@
+<?php //%255BApp%255CEntity%255CHabitaciones%2524CLASSMETADATA%255D%255B1%255D
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ClassMetadata')),
+        clone ($p['Doctrine\\ORM\\Id\\IdentityGenerator'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Id\\IdentityGenerator')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'App\\Entity\\Habitaciones',
+            ],
+            'namespace' => [
+                'App\\Entity',
+            ],
+            'rootEntityName' => [
+                'App\\Entity\\Habitaciones',
+            ],
+            'customRepositoryClassName' => [
+                'App\\Repository\\HabitacionesRepository',
+            ],
+            'identifier' => [
+                [
+                    'id',
+                ],
+            ],
+            'generatorType' => [
+                4,
+            ],
+            'fieldMappings' => [
+                [
+                    'id' => [
+                        'fieldName' => 'id',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'id',
+                        'id' => true,
+                    ],
+                    'nombre' => [
+                        'fieldName' => 'nombre',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 100,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'nombre',
+                    ],
+                    'numadultos' => [
+                        'fieldName' => 'numadultos',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'numAdultos',
+                    ],
+                    'numinfantiles' => [
+                        'fieldName' => 'numinfantiles',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'numInfantiles',
+                    ],
+                    'nummascotas' => [
+                        'fieldName' => 'nummascotas',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'numMascotas',
+                    ],
+                    'mediavaloracion' => [
+                        'fieldName' => 'mediavaloracion',
+                        'type' => 'float',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 10,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'mediaValoracion',
+                    ],
+                    'mediavaloracionmascotas' => [
+                        'fieldName' => 'mediavaloracionmascotas',
+                        'type' => 'float',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 10,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'mediaValoracionMascotas',
+                    ],
+                    'numcomentarios' => [
+                        'fieldName' => 'numcomentarios',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => true,
+                        'precision' => 0,
+                        'options' => [
+                            'default' => 'NULL',
+                        ],
+                        'columnName' => 'numComentarios',
+                    ],
+                    'precio' => [
+                        'fieldName' => 'precio',
+                        'type' => 'float',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 10,
+                        'columnName' => 'precio',
+                    ],
+                    'fechacreacion' => [
+                        'fieldName' => 'fechacreacion',
+                        'type' => 'date',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'fechaCreacion',
+                    ],
+                    'activo' => [
+                        'fieldName' => 'activo',
+                        'type' => 'boolean',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'activo',
+                    ],
+                ],
+            ],
+            'fieldNames' => [
+                [
+                    'id' => 'id',
+                    'nombre' => 'nombre',
+                    'numAdultos' => 'numadultos',
+                    'numInfantiles' => 'numinfantiles',
+                    'numMascotas' => 'nummascotas',
+                    'mediaValoracion' => 'mediavaloracion',
+                    'mediaValoracionMascotas' => 'mediavaloracionmascotas',
+                    'numComentarios' => 'numcomentarios',
+                    'precio' => 'precio',
+                    'fechaCreacion' => 'fechacreacion',
+                    'activo' => 'activo',
+                ],
+            ],
+            'columnNames' => [
+                [
+                    'id' => 'id',
+                    'nombre' => 'nombre',
+                    'numadultos' => 'numAdultos',
+                    'numinfantiles' => 'numInfantiles',
+                    'nummascotas' => 'numMascotas',
+                    'mediavaloracion' => 'mediaValoracion',
+                    'mediavaloracionmascotas' => 'mediaValoracionMascotas',
+                    'numcomentarios' => 'numComentarios',
+                    'precio' => 'precio',
+                    'fechacreacion' => 'fechaCreacion',
+                    'activo' => 'activo',
+                ],
+            ],
+            'table' => [
+                [
+                    'name' => 'habitaciones',
+                    'indexes' => [
+                        'idHotel' => [
+                            'columns' => [
+                                'idHospedaje',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'associationMappings' => [
+                [
+                    'idhospedaje' => [
+                        'fieldName' => 'idhospedaje',
+                        'joinColumns' => [
+                            [
+                                'name' => 'idHospedaje',
+                                'unique' => false,
+                                'nullable' => true,
+                                'onDelete' => 'CASCADE',
+                                'columnDefinition' => null,
+                                'referencedColumnName' => 'id',
+                            ],
+                        ],
+                        'cascade' => [],
+                        'inversedBy' => null,
+                        'targetEntity' => 'App\\Entity\\Hospedaje',
+                        'fetch' => 2,
+                        'type' => 2,
+                        'mappedBy' => null,
+                        'isOwningSide' => true,
+                        'sourceEntity' => 'App\\Entity\\Habitaciones',
+                        'isCascadeRemove' => false,
+                        'isCascadePersist' => false,
+                        'isCascadeRefresh' => false,
+                        'isCascadeMerge' => false,
+                        'isCascadeDetach' => false,
+                        'sourceToTargetKeyColumns' => [
+                            'idHospedaje' => 'id',
+                        ],
+                        'joinColumnFieldNames' => [
+                            'idHospedaje' => 'idHospedaje',
+                        ],
+                        'targetToSourceKeyColumns' => [
+                            'id' => 'idHospedaje',
+                        ],
+                        'orphanRemoval' => false,
+                    ],
+                ],
+            ],
+            'idGenerator' => [
+                $o[1],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); }];

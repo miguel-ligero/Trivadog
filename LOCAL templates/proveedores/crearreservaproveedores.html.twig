@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/css/reserveprovider.css">
+  <link rel="stylesheet" href="/css/provider.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row py-4 ml-1" style="height: 20%"></div>
+  <div class="row justify-content-center">
+    <div id="left-menu" class="col-12 col-lg-3 pr-0">
+      <div>
+        <a href="/proveedores/cuentaproveedor" class=" btn btn-primary mb-2 btn-home ">Volver</a>
+      </div>
+      <div >
+        <a href="/proveedores/reservas" class=" btn btn-primary mb-2 btn-home">Reservas</a>
+      </div>
+      <div>
+        <a id="btn-new" href="/proveedores/reservas" class= "btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-nuevo" aria-expanded="false" aria-controls="collapseExample">Nuevo</a>
+        <div class="collapse" id="collapse-nuevo">
+          <div class="card-body pt-0 menu-pos">
+            <a href="/hospedaje/alojamiento/nuevo" class="menu">Alojamiento</a>
+            <hr class="my-1">
+            <a href="/proveedores/habitacion/nuevo" class="menu">Habitación</a>
+            <hr class="my-1">
+          </div>
+        </div>
+      </div>
+      <div>
+        <a id="btn-accommodation" href="" class= "btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-alojamiento" aria-expanded="false" aria-controls="collapseExample">Alojamientos</a>
+        <div class="collapse" id="collapse-alojamiento">
+          <div class="card-body pt-0 menu-pos">
+            {% for val in host %}
+            <a class="menu" href="/hospedaje/alojamiento/editar/{{ val.id }}/{{ val.idproveedor.id }}">{{ val.nombre }}</a>
+            <hr class="my-1">
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mx-2 col-lg-8">
+      <div class="row title-color ">
+        <div class="col-12">
+          <h3 class="text">Crear Reserva</h3>
+        </div>
+      </div>
+      <div class="row mt-2"></div>
+      <div class="row justify-content-center ml-2 mb-2 mt-1 result-hist">
+        <div class="col-10 px-0 py-3">
+          <form id="reserve" method="post" action="/proveedores/reservas/guardar">
+            <input id="roomid" name="roomid" type="hidden" value="{{ room[0].id }}">
+            <input id="providerid" name="providerid" type="hidden" value="{{ app.user.id }}">
+            <div class="form-group">
+              <label for="">Fecha inicio</label>
+              <input id="inputfrom" name="inputfrom" type="text" class="form-control form-control-sm search-date" value="" required>
+            </div>
+            <div class="form-group">
+              <label for="">Fecha fin</label>
+              <input id="inputto" name="inputto" type="text" class="form-control form-control-sm search-date" value="" required>
+            </div>
+            <div class="form-group">
+              <label for="">Precio x noche</label>
+              <input id="inputpricenight" name="inputpricenight" type="text" class="form-control form-control-sm search-date" value="{{ room[0].precio }} €" readonly>
+            </div>
+            <div class="form-group">
+              <label for="">Precio</label>
+              <input id="inputprice" name="inputprice" type="text" class="form-control form-control-sm search-date" value="" required>
+            </div>
+            <div class="form-group">
+              <label for="">Adultos</label>
+              <input id="inputadults" name="inputadults" type="text" class="form-control" value="{{ room[0].numadultos }}">
+            </div>
+            <div class="form-group">
+              <label for="">Infantiles</label>
+              <input id="inputchildren" name="inputchildren" type="text" class="form-control" value="{{ room[0].numinfantiles }}">
+            </div>
+            <div class="form-group">
+              <label for="">Mascotas</label>
+              <input id="inputpets" name="inputpets" type="text" class="form-control" value="{{ room[0].nummascotas }}">
+            </div>
+            <button type="submit" class="btn btn-primary btn-home">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{{ asset('js/provider.js') }}"></script>
+  <script src="{{ asset('js/datepicker.js') }}"></script>
+  <script>
+    $(document).ready(function (){
+      InicializarReservasProveedores();
+    });
+
+    function InicializarReservasProveedores(){
+      EventosTabla();
+    }
+
+    function EventosTabla(){
+      $("#inputto").blur(function(){
+        var from = $('#inputfrom').val();
+        datefrom = DateFormat(from);
+        var to = $('#inputto').val();
+        dateto = DateFormat(to);
+        var price_night = $('#inputpricenight').val();
+        price_night = price_night.slice(0,-2);
+        datefrom = new Date(datefrom);
+        dateto = new Date(dateto);
+        var days = dateto - datefrom;
+        days = days / (1000 * 60 * 60 * 24);
+        var price = price_night * days;
+
+        $('#inputprice').val(price);
+        
+      });
+    }
+
+    function DateFormat(date){
+      var arraydate = date.split("/")
+      var orderdate = arraydate.reverse();
+      var formatdate = orderdate.join("/");
+      return formatdate;
+    } 
+
+  </script>
+{% endblock %}
+

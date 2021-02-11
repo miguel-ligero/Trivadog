@@ -1,0 +1,365 @@
+index:
+    path: /{modalmessage?}
+    controller: App\Controller\HomeController::index
+
+back:
+    path: /home/back
+    controller: App\Controller\HomeController::back
+
+busqueda:
+    path: /habitaciones/busqueda/{page?}
+    controller: App\Controller\HabitacionesController::search
+
+busquedaHabitacion:
+    path: /habitaciones/busquedaHabitacion/{page?}
+    controller: App\Controller\HabitacionesController::resultRooms
+
+detalle:
+    path: /habitaciones/detalle/{idHabitacion}
+    controller: App\Controller\HabitacionesController::detail
+
+listaReserva:
+    path: /reservas/lista/{idHabitacion}
+    controller: App\Controller\ReservasController::list
+
+confirmarReserva:
+    path: /reservas/confirm
+    controller: App\Controller\ReservasController::confirm
+    methods: [POST]
+
+guardarUsuario:
+    path: /registrousuario/guardar
+    controller: App\Controller\RegistrousuarioController::registerUser
+    methods: [POST]
+
+registroUsuario:
+    path: /registrousuario/form
+    controller: App\Controller\RegistrousuarioController::form
+
+comprobarEmail:
+    path: /registrousuario/checkemail/{email}
+    controller: App\Controller\RegistrousuarioController::checkEmail
+    methods: [GET]
+
+nuevoUsuario:
+    path: /registrousuario/nuevo/{id?}
+    controller: App\Controller\RegistrousuarioController::createEdit
+
+editarUsuario:
+    path: /registrousuario/editar/{id}
+    controller: App\Controller\RegistrousuarioController::createEdit
+
+cuentaCliente:
+    path: /registrousuario/cuentacliente/{id?}/{hostingtypeselect?}
+    controller: App\Controller\RegistrousuarioController::customerFilter
+
+insertarComentario:
+    path: /comentarioshospedaje/insertar
+    controller: App\Controller\ComentarioshospedajeController::insertComment
+    methods: [POST]
+
+registroProveedor:
+    path: /proveedores/index
+    controller: App\Controller\ProveedoresController::index
+
+comprobarEmailProveedor:
+    path: /proveedores/checkemail/{email}
+    controller: App\Controller\ProveedoresController::checkEmail
+
+nuevoProveedor:
+    path: /proveedores/nuevo/{id?}
+    controller: App\Controller\ProveedoresController::createEdit
+
+editarProveedor:
+    path: /proveedores/editar/{id?}
+    controller: App\Controller\ProveedoresController::createEdit
+ 
+guardarProveedor:
+    path: /proveedores/guardar
+    controller: App\Controller\ProveedoresController::registerProvider
+    methods: [POST]
+
+cuentaProveedor:
+    path: /proveedores/cuentaproveedor/{errorhost?}
+    controller: App\Controller\ProveedoresController::providerAccount
+
+reservasProveedor:
+    path: /proveedores/reservas
+    controller: App\Controller\ProveedoresController::providerReserves
+
+crearReservasProveedor:
+    path: /proveedores/crearreserva/{roomid}
+    controller: App\Controller\ProveedoresController::createReserves
+
+editarReservasProveedor:
+    path: /proveedores/reservas/editar/{reserveid}
+    controller: App\Controller\ProveedoresController::editReserve
+
+borrarReservasProveedor:
+    path: /proveedores/reservas/borrar/{reserveid}/{roomid}
+    controller: App\Controller\ProveedoresController::deleteReserve
+
+guardarReservasProveedor:
+    path: /proveedores/reservas/guardar
+    controller: App\Controller\ProveedoresController::saveReserve
+    methods: [POST]
+
+nuevaHabitacion:
+    path: /proveedores/habitacion/nuevo/
+    controller: App\Controller\HabitacionesController::createEditRoom
+
+editarHabitacion:
+    path: /proveedores/habitacion/editar/{roomid?}/{page?} 
+    controller: App\Controller\HabitacionesController::createEditRoom
+
+guardarHabitacion:
+    path: /proveedores/habitacion/guardar
+    controller: App\Controller\HabitacionesController::registerRoom
+    methods: [POST]
+
+borrarHabitacion:
+    path: /proveedores/habitacion/borrar/{roomid}/{page?}
+    controller: App\Controller\HabitacionesController::deleteRoom
+
+nuevAlojamiento:
+    path: /hospedaje/alojamiento/nuevo
+    controller: App\Controller\HospedajeController::createEditHost
+
+editarAlojamiento:
+    path: /hospedaje/alojamiento/editar/{hostid}/{providerid?}
+    controller: App\Controller\HospedajeController::createEditHost
+ 
+guardarAlojamiento:
+    path: /hospedaje/alojamiento/guardar
+    controller: App\Controller\HospedajeController::registerHost
+    methods: [POST]
+
+editarServicioshabitaciones:
+    path: /servicioshabitaciones/formularioservicios/{roomid}
+    controller: App\Controller\ServicioshabitacionesController::services
+
+guardarServicioshabitaciones:
+    path: /servicioshabitaciones/guardar
+    controller: App\Controller\ServicioshabitacionesController::registerservice
+    methods: [POST]
+
+nuevoMultimedia:
+    path: /multimedia/nuevo
+    controller: App\Controller\MultimediaController::savePicture
+
+editarMultimedia:
+    path: /multimedia/guardar
+    controller: App\Controller\MultimediaController::savePicture
+
+principalMultimedia:
+    path: /multimedia/principal
+    controller: App\Controller\MultimediaController::changeMainImg
+    methods: [POST]
+
+eliminarMultimedia:
+    path: /multimedia/borrar/{pictureid}/{roomid}
+    controller: App\Controller\MultimediaController::deletePicture
+
+habitacionMultimedia:
+    path: /multimedia/{roomid}
+    controller: App\Controller\MultimediaController::room
+
+servicioshabitaciones_index:
+    path: /serviciohabitaciones/index
+    controller: App\Controller\ServicioshabitacionesController::index
+
+servicioshabitaciones_new:
+    path: /serviciohabitaciones/new
+    controller: App\Controller\ServicioshabitacionesController::new
+
+servicioshabitaciones_show:
+    path: /serviciohabitaciones/show/{id}
+    controller: App\Controller\ServicioshabitacionesController::show
+
+servicioshabitaciones_edit:
+    path: /serviciohabitaciones/{id}/edit
+    controller: App\Controller\ServicioshabitacionesController::edit
+
+servicioshabitaciones_delete:
+    path: /serviciohabitaciones/{id}/delete
+    controller: App\Controller\ServicioshabitacionesController::delete
+
+clientes_index:
+    path: /clientes/index
+    controller: App\Controller\ClientesController::index
+
+clientes_new:
+    path: /clientes/new
+    controller: App\Controller\ClientesController::new
+
+clientes_show:
+    path: /clientes/show/{id}
+    controller: App\Controller\ClientesController::show
+
+clientes_edit:
+    path: /clientes/{id}/edit
+    controller: App\Controller\ClientesController::edit
+
+clientes_delete:
+    path: /clientes/{id}/delete
+    controller: App\Controller\ClientesController::delete
+
+comentarioshospedaje_index:
+    path: /comentarioshospedaje/index
+    controller: App\Controller\ComentarioshospedajeController::index
+
+comentarioshospedaje_new:
+    path: /comentarioshospedaje/new
+    controller: App\Controller\ComentarioshospedajeController::new
+
+comentarioshospedaje_show:
+    path: /comentarioshospedaje/show/{id}
+    controller: App\Controller\ComentarioshospedajeController::show
+
+comentarioshospedaje_edit:
+    path: /comentarioshospedaje/{id}/edit
+    controller: App\Controller\ComentarioshospedajeController::edit
+
+comentarioshospedaje_delete:
+    path: /comentarioshospedaje/{id}/delete
+    controller: App\Controller\ComentarioshospedajeController::delete
+
+habitaciones_index:
+    path: /habitaciones/index
+    controller: App\Controller\HabitacionesController::index
+
+habitaciones_new:
+    path: /habitaciones/new
+    controller: App\Controller\HabitacionesController::new
+
+habitaciones_show:
+    path: /habitaciones/show/{id}
+    controller: App\Controller\HabitacionesController::show
+
+habitaciones_edit:
+    path: /habitaciones/{id}/edit
+    controller: App\Controller\HabitacionesController::edit
+
+habitaciones_delete:
+    path: /habitaciones/{id}/delete
+    controller: App\Controller\HabitacionesController::delete
+
+hospedaje_index:
+    path: /hospedaje/index
+    controller: App\Controller\HospedajeController::index
+
+hospedaje_new:
+    path: /hospedaje/new
+    controller: App\Controller\HospedajeController::new
+
+hospedaje_show:
+    path: /hospedaje/show/{id}
+    controller: App\Controller\HospedajeController::show
+
+hospedaje_edit:
+    path: /hospedaje/{id}/edit
+    controller: App\Controller\HospedajeController::edit
+
+hospedaje_delete:
+    path: /hospedaje/{id}/delete
+    controller: App\Controller\HospedajeController::delete
+
+multimedia_index:
+    path: /multimedia/index
+    controller: App\Controller\MultimediaController::index
+
+multimedia_new:
+    path: /multimedia/new
+    controller: App\Controller\MultimediaController::new
+
+multimedia_show:
+    path: /multimedia/show/{id}
+    controller: App\Controller\MultimediaController::show
+
+multimedia_edit:
+    path: /multimedia/{id}/edit
+    controller: App\Controller\MultimediaController::edit
+
+multimedia_delete:
+    path: /multimedia/{id}/delete
+    controller: App\Controller\MultimediaController::delete
+
+reservas_index:
+    path: /reservas/index
+    controller: App\Controller\ReservasController::index
+
+reservas_new:
+    path: /reservas/new
+    controller: App\Controller\ReservasController::new
+
+reservas_show:
+    path: /reservas/show/{id}
+    controller: App\Controller\ReservasController::show
+
+reservas_edit:
+    path: /reservas/{id}/edit
+    controller: App\Controller\ReservasController::edit
+
+reservas_delete:
+    path: /reservas/{id}/delete
+    controller: App\Controller\ReservasController::delete
+
+perfil_index:
+    path: /perfil/index
+    controller: App\Controller\PerfilController::index
+
+perfil_new:
+    path: /perfil/new
+    controller: App\Controller\PerfilController::new
+
+perfil_show:
+    path: /perfil/show/{id}
+    controller: App\Controller\PerfilController::show
+
+perfil_edit:
+    path: /perfil/{id}/edit
+    controller: App\Controller\PerfilController::edit
+
+perfil_delete:
+    path: /perfil/{id}/delete
+    controller: App\Controller\PerfilController::delete
+
+servicios_index:
+    path: /servicios/index
+    controller: App\Controller\ServiciosController::index
+
+servicios_new:
+    path: /servicios/new
+    controller: App\Controller\ServiciosController::new
+
+servicios_show:
+    path: /servicios/show/{id}
+    controller: App\Controller\ServiciosController::show
+
+servicios_edit:
+    path: /servicios/{id}/edit
+    controller: App\Controller\ServiciosController::edit
+
+servicios_delete:
+    path: /servicios/{id}/delete
+    controller: App\Controller\ServiciosController::delete
+
+tipohospedaje_index:
+    path: /tipohospedaje/index
+    controller: App\Controller\TipohospedajeController::index
+
+tipohospedaje_new:
+    path: /tipohospedaje/new
+    controller: App\Controller\TipohospedajeController::new
+
+tipohospedaje_show:
+    path: /tipohospedaje/show/{id}
+    controller: App\Controller\TipohospedajeController::show
+
+tipohospedaje_edit:
+    path: /tipohospedaje/{id}/edit
+    controller: App\Controller\TipohospedajeController::edit
+
+tipohospedaje_delete:
+    path: /tipohospedaje/{id}/delete
+    controller: App\Controller\TipohospedajeController::delete

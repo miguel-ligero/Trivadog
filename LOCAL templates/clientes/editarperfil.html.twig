@@ -1,0 +1,249 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="/css/registry.css">
+  <link rel="stylesheet" type="text/css" href="/css/modal.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row align-items-center py-4"></div>
+  <div class="row justify-content-center" style="min-height: 500px">
+    <div class="col-12 ">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="card bg-light">
+            <div class="card-body">
+              <form id="form-register" action="/registrousuario/guardar" method="post">
+                <div class="row">
+                  {% set valinputid = customer.id %}
+                  {% set valinputname = customer.nombre %}
+                  {% set valinputsurname = customer.apellidos %}
+                  {% set valinputemail = customer.email %}
+                  {% set valinputpassword = customer.password %}
+                  {% set valinputphone = customer.telefono %}
+                  {% set valinputaddress = customer.direccion %}
+                  {% set valinputadmin1 = customer.admin1code %}
+                  {% set valinputadmin2 = customer.admin2code %}
+                  {% set valinputadmin3 = customer.admin3code %}
+                  <input id="inputhiddenaction" type="hidden" value="{{ createedit }}">
+                <div class="col-1"></div>
+                  <div class="col-12 col-lg-5">
+                    <div class="form-group">
+                      <input type="hidden" class="form-control" id="inputid" name="inputid" nombre="id" value="{{ valinputid }}">
+                      <label for="inputname">Nombre</label>
+                      <input type="text" class="form-control" id="inputname" name="inputname" nombre="nombre" value="{{ valinputname }}">
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-5">
+                    {% if valinputsurname is empty %}
+                      {% set valinputsurname = "NULL" %}
+                    {% endif %}
+                    {% if valinputsurname != "NULL" %}
+                      <div class="form-group">
+                        <label for="inputsurname">Apellidos</label>
+                        <input type="text" class="form-control" id="inputsurname" name="inputsurname" nombre="apellidos" value="{{ valinputsurname }}">
+                        {% if arrayerror["apellidos"] is defined %}
+                          <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["apellidos"]}}</p>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-12 col-lg-5">
+                    <div class="form-group">
+                      <label for="inputemail">Email</label>
+                      <input type="email" class="form-control" id="inputemail" name="inputemail" placeholder="name@example.com" nombre="email"  value="{{ valinputemail }}">
+                      {% if arrayerror["email"] is defined %}
+                        <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["email"]}}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-5">
+                    <div class="form-group">
+                      <label for="inputphone">Teléfono</label>
+                      <input type="tel" class="form-control" id="inputphone" name="inputphone" nombre="teléfono"  value="{{ valinputphone }}">
+                      {% if arrayerror["telefono"] is defined %}
+                        <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["telefono"]}}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-12 col-lg-5">
+                    <div class="form-group">
+                      <label for="inputpw">Contraseña</label>
+                      <input type="password" class="form-control" id="inputpw" name="inputpw" laceholder="Mínimo 8 caracteres" nombre="contraseña"  value="{{ valinputpassword }}">
+                      {% if arrayerror["password"] is defined %}
+                        <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["password"]}}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-5">
+                    <div class="form-group">
+                      <label for="inputpw2">Confirmar Contraseña</label>
+                      <input type="password" class="form-control" id="inputpw2" name="inputpw2" laceholder="Mínimo 8 caracteres" nombre="confirmar contraseña" value="{{ valinputpassword }}">
+                      {% if arrayerror["password"] is defined %}
+                        <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["password"]}}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-12 col-lg-10">
+                    <div class="form-group">
+                      <label for="inputaddress">Dirección</label>
+                      <input type="text" class="form-control" id="inputaddress" name="inputaddress" nombre="dirección"  value="{{ valinputaddress }}">
+                      {% if arrayerror["direccion"] is defined %}
+                        <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["direccion"]}}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+                <div class="row">
+                  <div class="col-1"></div>
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">
+                        <label for="autonomia">Comunidad Autónoma:</label>
+                        <select class="form-control" name="autonomia" id="autonomia">
+                        <option value="">Seleccione Autonomía</option>
+                          {% for geocomunidad in geocomunidades %}
+                            <option value="{{geocomunidad.admin1code}}">{{geocomunidad.name}}</option>
+                          {% endfor %}
+                        </select>
+                        {% if arrayerror["autonomia"] is defined %}
+                          <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["autonomia"]}}</p>
+                        {% endif %}
+                        <input name="inputhiddenadmin1" type="hidden" value="{{ valinputadmin1 }}">
+                      </div>
+                    </div>
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">
+                        <label for="provincias">Provincias:</label>
+                        <select class="form-control" name="provincias" id="provincias" disabled>
+                          <option value="">Seleccione Provincia</option>
+                        </select>
+                        {% if arrayerror["provincias"] is defined %}
+                          <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["provincias"]}}</p>
+                        {% endif %}
+                        <input name="inputhiddenadmin2" type="hidden" value="{{ valinputadmin2 }}">
+                      </div>
+                    </div>
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">
+                        <label for="poblacion">Población:</label>
+                        <select class="form-control" name="poblacion" id="poblacion" disabled>
+                          <option value="">Seleccione Poblacion</option>
+                        </select>
+                        {% if arrayerror["poblacion"] is defined %}
+                          <p class="mensajeError" style="color:red">Por favor, rellene el campo. {{arrayerror["poblacion"]}}</p>
+                        {% endif %}
+                        <input name="inputhiddenadmin3" type="hidden" value="{{ valinputadmin3 }}">
+                      </div>
+                    </div>
+                  <div class="col-1"></div>
+                </div>
+                <div class="row pb-4">
+                  <div class="col-1"></div>
+                  <div class="col-12 col-lg-10">
+                    <button id="btn-send" type="submit" class="btn btn-primary btn-lg btn-home ml-2" control="On" data-toggle="tooltip" title="Por favor, complete el formulario">Guardar</button>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+              </form>  
+            </div>
+          </div>
+        </div>
+        <div class="col-1"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row pb-4"></div>
+</div>
+
+<!--Modal-->
+<div id="myModal"class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="" style="float:left">
+        <p id="modal-text" class="modal-text mt-3"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {% set modal = 'hide' %}
+  {% set message = "" %}
+  {% set img = "" %}
+  {% set title = "" %}
+  
+  {% if querystatus == 'edit' %}
+    {% set modal = 'show' %}
+    {% set message = 'Registro modificado satisfactoriamente.' %}
+    {% set img = '/img/ico/dog_pilot.ico' %}
+    {% set title = 'Guardado!!' %}
+  {% elseif querystatus == 'error' %}
+    {% set modal = 'show' %}
+    {% set message = 'No se ha podido realizar la modificación. Por favor, vuelva a intentarlo.' %}
+    {% set img = '/img/ico/dog_scream.ico' %}
+    {% set title = 'Error!!' %}
+  {% endif %}
+  <script>
+    $(document).ready(function (){
+      var surname = "";
+      if ($('#inputsurname').length){
+        var surname = "ok";
+      };
+      var statusmodal = '{{ querystatus }}';
+      var img = '{{ img }}';
+      var title = '{{ title }}';
+      if (surname == 'ok'){
+        if (statusmodal == 'edit'){
+          url = "/registrousuario/cuentacliente";
+        }else if (statusmodal == 'error' ){
+          url = "/registrousuario";
+        }else if (statusmodal == 'new'){
+          url = "/login";
+        }
+      }else{
+        if (statusmodal == 'edit'){
+          url = "/proveedores/cuentaproveedor";
+        }else if (statusmodal == 'error' ){
+          url = "/registrousuario";
+        }
+      }
+      $('#modal-title').text(title);
+      $('#modal-img').attr('src', img);
+      $('#modal-text').text('{{ message }}')
+      $('#myModal').modal('{{ modal }}');
+      $('#myModal').on('hide.bs.modal', function(){
+        localStorage.clear();
+        location.href = url;
+      });
+    });
+  </script>
+  <script src="/js/registrousuario.js"></script>
+{% endblock %}

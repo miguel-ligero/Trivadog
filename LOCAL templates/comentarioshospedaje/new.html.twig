@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Comentario{% endblock %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Crear Comentario</h1>
+    <a class="btn btn-primary mb-4 btn-home" href="{{ path('comentarioshospedaje_index') }}">Volver</a>
+    {{ include('comentarioshospedaje/_form.html.twig') }}
+
+</div>
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/provider.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/reserveprovider.css">
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row py-4 ml-1" style="height: 20%"></div>
+  <div class="row justify-content-center">
+    <div id="left-menu" class="col-10 col-lg-2 pr-0">
+      <div>
+        <a href="/proveedores/cuentaproveedor" class=" btn btn-primary mb-2 btn-home ">Volver</a>
+      </div>
+      <div>
+        <a id="btn-new" href="/proveedores/reservas" class="btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-nuevo" aria-expanded="false"
+          aria-controls="collapseExample">Nuevo</a>
+        <div class="collapse" id="collapse-nuevo">
+          <div class="card-body pt-0 menu-pos">
+            <a href="/hospedaje/alojamiento/nuevo" class="menu">Alojamiento</a>
+            <hr class="my-1">
+            <a href="/proveedores/habitacion/nuevo" class="menu">Habitación</a>
+            <hr class="my-1">
+          </div>
+        </div>
+      </div>
+      <div>
+        <a id="btn-accommodation" href="" class="btn btn-primary mb-2 btn-home" type="button" data-toggle="collapse" data-target="#collapse-alojamiento" aria-expanded="false"
+          aria-controls="collapseExample">Alojamientos</a>
+        <div class="collapse" id="collapse-alojamiento">
+          <div class="card-body pt-0 menu-pos">
+            {% for val in host %}
+            <a href="/hospedaje/alojamiento/editar/{{ val.id }}" class="menu">{{ val.nombre }}</a>
+            <hr class="my-1">
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-12 px-0 pb-3">
+          <div class="row align-items-center ml-3 my-2 result-hist">
+            <div class="col-4 col-lg-1 px-2" align="center">
+              <p class="m-0 text-header">Id. Reserva</p>
+            </div>
+            <div class="col-lg-1 px-2 hide-div" align="center">
+              <p class="m-0 text-header">Id. Cliente</p>
+            </div>
+            <div class="col-lg-1 px-2 hide-div" align="center">
+              <p class="m-0 text-header">Id. Habitación</p>
+            </div>
+            <div class="col-4 col-lg-2 px-2" align="center">
+              <p class="m-0 text-header">Fecha Inicio</p>
+            </div>
+            <div class="col-4 col-lg-2 px-2" align="center">
+              <p class="m-0 text-header">Fecha Fin</p>
+            </div>
+            <div class="col-lg-1 px-2 hide-div" align="center">
+              <p class="m-0 text-header">Precio x noche</span></p>
+            </div>
+            <div class="col-lg-1 px-2 hide-div" align="center">
+              <p class="m-0 text-header">Precio</span></p>
+            </div>
+          </div>
+          {% for item in reserves %}
+            <div class="row align-items-center ml-3 my-2 result-hist">
+              <div class="col-4 col-lg-1 p-2" align="center">
+                <p class="m-0 text-reg">{{ item.id }}</p>
+              </div>
+              <div class="col-lg-1 p-2 hide-div" align="center">
+                <p class="m-0 text-reg"><a id="{{ item.idCliente }}" href="#">{{ item.idCliente }}</a></p>
+              </div>
+              <div class="col-lg-1 p-2 hide-div" align="center">
+                <p class="m-0 text-reg">{{ item.idHabitacion }}</p>
+              </div>
+              <div class="col-4 col-lg-2 p-2" align="center">
+                <p class="m-0 text-reg">{{ item.fechaInicio|date('d/m/Y') }}</p>
+              </div>
+              <div class="col-4 col-lg-2" align="center">
+                <p class="m-0 text-reg">{{ item.fechaFin|date('d/m/Y') }}</p>
+              </div>
+              <div class="col-lg-1 p-2 hide-div" align="center">
+                <p class="m-0 text-reg">{{ item.precio_noche }}<span> €</span></p>
+              </div>
+              <div class="col-lg-1 p-2 hide-div" align="center">
+                <p class="m-0 text-reg">{{ item.precio }}<span> €</span></p>
+              </div>
+              <div class="col-12 col-lg-3 my-auto  px-0" align="center">
+                <a href="/proveedores/reservas/editar/{{item.id}}?roomid={{ item.idHabitacion }}&&page={{ page }}" class="btn btn-primary btn-editar btn-sm mb-1 mb-lg-0 mx-1">Editar</a>
+                <a href="/proveedores/reservas/borrar/{{item.id}}/{{ item.idHabitacion }}" class="btn btn-primary btn-borrar btn-sm mb-1 mb-lg-0 mx-1">Borrar</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Paginacion-->
+  {% if pagestotal >= 2 %}
+    <div class="row pb-4" style="height: 20%">
+      <div class="col-12 pt-5">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center pl-0">
+            <li class="page-item"><a class="page-link" href="/proveedores/reservas?page={{ prev }}">Anterior</a></li>
+            {% for i in 1..pagestotal %}
+              {% set active = "" %}
+              {% if page == i %}
+                {% set active = "active" %}
+              {% endif %}
+              <li class="page-item {{ active }}"><a class="page-link" href="/proveedores/reservas?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            <li class="page-item"><a class="page-link" href="/proveedores/reservas?page={{ next }}">Siguiente</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<!--Modal error-->
+<div id="myModal"class="modal " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-title" class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img"src="" style="float:left">
+        <p id="modal-text" class="modal-text mt-3"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-primary btn-home" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('js/provider.js') }}"></script>
+{% set modal = 'hide' %}
+{% set message = "" %}
+{% set img = "" %}
+{% set title = "" %}
+
+{% if querystatus == 'error' %}
+    {% set modal = 'show' %}
+    {% set message = 'Primero debe crear un alojamiento.' %}
+    {% set img = '/img/ico/dog_scream.ico' %}
+    {% set title = 'Error!!' %}
+  {% elseif querystatus == 'delete' %}
+    {% set modal = 'show' %}
+    {% set message = 'Borrado satisfactoriamente.' %}
+    {% set img = '/img/ico/dog_fitness.ico' %}
+    {% set title = 'Registro borrado!!' %}
+  {% elseif querystatus == 'roomerror' %}
+    {% set modal = 'show' %}
+    {% set message = 'No se ha podido borrar el registro. Por favor, pongase en contacto con el administrador.' %}
+    {% set img = '/img/ico/dog_scream.ico' %}
+    {% set title = 'Error!!' %}
+  {% endif %}
+<script>
+  $(document).ready(function (){
+    {# var error = '{{ errorhost }}';  #}
+    var statusmodal = '{{ querystatus }}';
+    var img = '{{ img }}';
+    var title = '{{ title }}';
+
+    $('#modal-title').text(title);
+    $('#modal-img').attr('src', img);
+    $('#modal-text').text('{{ message }}');
+    $('#myModal').modal('{{modal}}');
+  });
+</script>
+{% endblock %}

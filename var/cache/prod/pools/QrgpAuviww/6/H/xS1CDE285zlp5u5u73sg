@@ -1,0 +1,252 @@
+<?php //%255BApp%255CEntity%255CReservas%2524CLASSMETADATA%255D%255B1%255D
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ClassMetadata')),
+        clone ($p['Doctrine\\ORM\\Id\\IdentityGenerator'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Id\\IdentityGenerator')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'App\\Entity\\Reservas',
+            ],
+            'namespace' => [
+                'App\\Entity',
+            ],
+            'rootEntityName' => [
+                'App\\Entity\\Reservas',
+            ],
+            'customRepositoryClassName' => [
+                'App\\Repository\\ReservasRepository',
+            ],
+            'identifier' => [
+                [
+                    'id',
+                ],
+            ],
+            'generatorType' => [
+                4,
+            ],
+            'fieldMappings' => [
+                [
+                    'id' => [
+                        'fieldName' => 'id',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'id',
+                        'id' => true,
+                    ],
+                    'fechainicio' => [
+                        'fieldName' => 'fechainicio',
+                        'type' => 'date',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'fechaInicio',
+                    ],
+                    'fechafin' => [
+                        'fieldName' => 'fechafin',
+                        'type' => 'date',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'fechaFin',
+                    ],
+                    'adultos' => [
+                        'fieldName' => 'adultos',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'adultos',
+                    ],
+                    'infantiles' => [
+                        'fieldName' => 'infantiles',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'infantiles',
+                    ],
+                    'mascotas' => [
+                        'fieldName' => 'mascotas',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'mascotas',
+                    ],
+                    'precio' => [
+                        'fieldName' => 'precio',
+                        'type' => 'float',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 10,
+                        'columnName' => 'precio',
+                    ],
+                    'fechacreacion' => [
+                        'fieldName' => 'fechacreacion',
+                        'type' => 'date',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'fechaCreacion',
+                    ],
+                    'activo' => [
+                        'fieldName' => 'activo',
+                        'type' => 'boolean',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'activo',
+                    ],
+                ],
+            ],
+            'fieldNames' => [
+                [
+                    'id' => 'id',
+                    'fechaInicio' => 'fechainicio',
+                    'fechaFin' => 'fechafin',
+                    'adultos' => 'adultos',
+                    'infantiles' => 'infantiles',
+                    'mascotas' => 'mascotas',
+                    'precio' => 'precio',
+                    'fechaCreacion' => 'fechacreacion',
+                    'activo' => 'activo',
+                ],
+            ],
+            'columnNames' => [
+                [
+                    'id' => 'id',
+                    'fechainicio' => 'fechaInicio',
+                    'fechafin' => 'fechaFin',
+                    'adultos' => 'adultos',
+                    'infantiles' => 'infantiles',
+                    'mascotas' => 'mascotas',
+                    'precio' => 'precio',
+                    'fechacreacion' => 'fechaCreacion',
+                    'activo' => 'activo',
+                ],
+            ],
+            'table' => [
+                [
+                    'name' => 'reservas',
+                    'indexes' => [
+                        'idCliente' => [
+                            'columns' => [
+                                'idCliente',
+                            ],
+                        ],
+                        'idHabitacion' => [
+                            'columns' => [
+                                'idHabitacion',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'associationMappings' => [
+                [
+                    'idcliente' => [
+                        'fieldName' => 'idcliente',
+                        'joinColumns' => [
+                            [
+                                'name' => 'idCliente',
+                                'unique' => false,
+                                'nullable' => true,
+                                'onDelete' => 'CASCADE',
+                                'columnDefinition' => null,
+                                'referencedColumnName' => 'id',
+                            ],
+                        ],
+                        'cascade' => [],
+                        'inversedBy' => null,
+                        'targetEntity' => 'App\\Entity\\Clientes',
+                        'fetch' => 2,
+                        'type' => 2,
+                        'mappedBy' => null,
+                        'isOwningSide' => true,
+                        'sourceEntity' => 'App\\Entity\\Reservas',
+                        'isCascadeRemove' => false,
+                        'isCascadePersist' => false,
+                        'isCascadeRefresh' => false,
+                        'isCascadeMerge' => false,
+                        'isCascadeDetach' => false,
+                        'sourceToTargetKeyColumns' => [
+                            'idCliente' => 'id',
+                        ],
+                        'joinColumnFieldNames' => [
+                            'idCliente' => 'idCliente',
+                        ],
+                        'targetToSourceKeyColumns' => [
+                            'id' => 'idCliente',
+                        ],
+                        'orphanRemoval' => false,
+                    ],
+                    'idhabitacion' => [
+                        'fieldName' => 'idhabitacion',
+                        'joinColumns' => [
+                            [
+                                'name' => 'idHabitacion',
+                                'unique' => false,
+                                'nullable' => true,
+                                'onDelete' => 'CASCADE',
+                                'columnDefinition' => null,
+                                'referencedColumnName' => 'id',
+                            ],
+                        ],
+                        'cascade' => [],
+                        'inversedBy' => null,
+                        'targetEntity' => 'App\\Entity\\Habitaciones',
+                        'fetch' => 2,
+                        'type' => 2,
+                        'mappedBy' => null,
+                        'isOwningSide' => true,
+                        'sourceEntity' => 'App\\Entity\\Reservas',
+                        'isCascadeRemove' => false,
+                        'isCascadePersist' => false,
+                        'isCascadeRefresh' => false,
+                        'isCascadeMerge' => false,
+                        'isCascadeDetach' => false,
+                        'sourceToTargetKeyColumns' => [
+                            'idHabitacion' => 'id',
+                        ],
+                        'joinColumnFieldNames' => [
+                            'idHabitacion' => 'idHabitacion',
+                        ],
+                        'targetToSourceKeyColumns' => [
+                            'id' => 'idHabitacion',
+                        ],
+                        'orphanRemoval' => false,
+                    ],
+                ],
+            ],
+            'idGenerator' => [
+                $o[1],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); }];

@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="http://trivadog.mipropia.com/trivadog/public/css/provider.css">
+  
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row py-4 ml-1" style="height: 20%"></div>
+  <div class="row justify-content-left">
+    <div id="left-menu" class="col-3 col-lg-2 pr-0">
+      <div>
+        <a id="btn-new" href="http://trivadog.mipropia.com/trivadog/public/proveedores/cuentaproveedor" class="btn btn-primary mb-2 btn-home " type="button" >Volver</a>
+        <a id="btn-new" href="" class="btn btn-primary mb-2 btn-home " type="button" data-toggle="collapse" data-target="#collapse-nuevo" aria-expanded="false" aria-controls="collapseExample">Editar</a>
+        <div class="collapse" id="collapse-nuevo">
+          <div class="card-body pt-0 menu-pos">
+            <a href="http://trivadog.mipropia.com/trivadog/public/proveedores/habitacion/editar/{{ room }}" class="menu">Datos habitación</a>
+            <hr class="my-1">
+            <a href="http://trivadog.mipropia.com/trivadog/public/servicioshabitaciones/formularioservicios/{{ room }}" class="menu">Servicios</a>
+            <hr class="my-1">
+            <a href="http://trivadog.mipropia.com/trivadog/public/multimedia/{{ room }}" class="menu">Imagenes</a>
+            <hr class="my-1">
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div class="col-11 col-lg-10">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 px-0 pb-3">
+          {% for val in pictures %}
+            {% set path = "http://trivadog.mipropia.com/trivadog/public/img/ico/dog_shepherd.ico" %}
+            {% if val.nombrefichero != "dog_boxer.ico" %}
+              {% set path ="http://trivadog.mipropia.com/trivadog/public/img/host/" ~ room ~ "/" ~ val.nombrefichero  %}
+                <div class="row ml-3 my-2 result-hist count-img">
+                  <input type="hidden" name="pictureid{{ val.id }}" class="custom-file-input" id="pictureid{{ val.id }}" value="{{ val.id }}">
+                  <div class="col-4 p-2">
+                    <img id="mainimg" src="{{ path }}" myid="{{ val.id }}" class="center-img" style="width:8rem; height:5rem">
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-2 my-auto" align="center">
+                    {% set principal = '' %}
+                    {% if val.principal == 1 %}
+                      {% set principal = 'checked' %}
+                    {% endif %}
+                    <input type="checkbox" id="checkmain{{ val.id }}" name="checkmain{{ val.id }}" value="1" {{ principal }}>
+                    <label for="vehicle1">Principal</label><br>
+                  </div>
+                  <div class="col-2 my-auto" align="center">
+                    <button id="btn-edit-{{ val.id }}" type="button" myid="{{ val.id }}" class="btn btn-primary btn-editar btn-sm my-3" data-toggle="modal" data-target="#imgmodal">Editar</button>
+                  </div>
+                  <div class="col-2 my-auto" align="center">
+                    <a href="http://trivadog.mipropia.com/trivadog/public/multimedia/borrar/{{ val.id }}/{{ room }}" class="btn btn-danger btn-editar btn-sm my-3">Eliminar</a>
+                  </div>
+                </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div id="addblock" class="col-12 col-lg-10 px-0 pb-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+<div class="modal fade" id="imgmodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="imgmodalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imgmodalLabel">Seleccione una imagen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="formimg" action="http://trivadog.mipropia.com/trivadog/public/multimedia/guardar" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="custom-file">
+            <input type="hidden" name="modalpictureid" class="custom-file-input" id="modalpictureid" value="">
+            <input type="hidden" name="room" class="custom-file-input" id="room" value="{{ room }}">
+            <input type="hidden" name="providerid" class="custom-file-input" id="providerid" value="{{ app.user.id }}">
+            <input type="file" name="file" class="custom-file-input" id="file">
+            <label class="custom-file-label" for="customFile">Elegir imagen</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnsubmit" type="submit" value="submit" class="btn btn-primary">Guardar</button>
+          <button id="btncancelsubmit" type="button" class="btn btn-primary btn-editar btn-sm my-3" data-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('js/multimedia.js') }}"></script>
+
+{% endblock %}

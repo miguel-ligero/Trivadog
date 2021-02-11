@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Perfil</h1>
+    <div>
+        <a class="btn btn-primary mb-4 btn-home" href="{{ path('back') }}">Volver</a>
+    </div>
+    <div>
+        <a class="btn btn-primary mb-4 btn-home" href="{{ path('perfil_new') }}">Crear nuevo</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Fechacreacion</th>
+                <th>Activo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for perfil in perfils %}
+            <tr>
+                <td>{{ perfil.id }}</td>
+                <td>{{ perfil.nombre }}</td>
+                <td>{{ perfil.fechacreacion ? perfil.fechacreacion|date('Y-m-d') : '' }}</td>
+                <td>{{ perfil.activo ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('perfil_show', {'id': perfil.id}) }}">Detalles</a>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('perfil_edit', {'id': perfil.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No se ha encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+</div>
+{% endblock %}

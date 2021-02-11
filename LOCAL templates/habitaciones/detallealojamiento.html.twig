@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/detail.css">  
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row align-items-center py-4" style="height: 20%">
+    <div class="col-12 "></div>
+  </div>
+  <div class="row " style="min-height: 60%">
+    <div class="col-3 col-lg-2 py-1">
+      <div class="row justify-content-center" >
+        <div class="col-12 col-lg-10 pl-2 p-0">
+          {% if linkcontrol == "busqueda" %}
+            <a class="btn btn-primary btn-home" href="{{ path("busquedaHabitacion", {page: page }) }}?host='{{ room.idhospedaje.nombre }}'&destination={{ destination }}&typehosting={{ typehosting }}&from={{ from }}&to={{ to }}&adults={{ adults }}&children={{ children }}&pets={{ pets }}" role="button">Volver</a>
+          {% elseif linkcontrol == "home" %}
+            <a class="btn btn-primary btn-home" href="{{ path('index') }}" role="button">Volver</a>
+          {% else %}
+            <a class="btn btn-primary btn-home" href="{{ path('cuentaCliente', {id: customeraccountid}) }}" role="button">Volver</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-10 py-1">
+      <div class="card bg-light">
+        <div class="card-body row">
+          <div class="col-12 col-lg-6">
+            <div class="row justify-content-md-center " style="height:400px" >
+              <div class="col-12 h-100 align-items-center">
+                <div id="carouselExampleCaptions" class="carousel slide h-100" data-ride="carousel">
+                  <div class="carousel-inner h-100 pt-5" >
+                  {% set cont = 0 %}
+                  {% for item in img %}
+                    {% set active = "" %} 
+                    {% if (cont == 0) %}
+                      {% set active ="active" %}
+                      {% set cont = cont + 1 %}
+                    {% endif %}
+                    {% set path = "/img/ico/dog_chihuahua_bone.ico" %}
+                      {% if item.nombrefichero != "dog_boxer.ico" %}
+                          {% set path ="/img/host/"~ item.idhabitacion.id ~"/"~ item.nombrefichero %}
+                      {% endif %}
+                    <div class="carousel-item {{ active }} w-100" data-interval="8000">
+                      <img src="{{ path }}" class="d-block w-100 h-auto back-img" alt="Imagen habitación {{ item.idhabitacion.id }}">
+                    </div>
+                  {% endfor %}
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row py-3 align-items-center" style="height:200px">
+              {% for item in img %}
+                {% set path = "/img/ico/dog_chihuahua_bone.ico" %}
+                  {% if item.nombrefichero != "dog_boxer.ico" %}
+                      {% set path ="/img/host/"~ item.idhabitacion.id ~"/"~ item.nombrefichero %}
+                  {% endif %}
+                <div class="col-2 mx-auto p-0" height="100px" width="100px">
+                  <a href="#"><img src="{{ path }}" class="d-block w-100 h-100 back-img" alt="Imagen habitación {{ item.idhabitacion.id }}"></a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card h-100 p-0">
+              <div class="card-body p-2">
+                <h3 class="card-title text-right pr-1">{{ room.idhospedaje.nombre }}</h3>
+                <h6 class="card-title text-right pr-1">{{ room.idhospedaje.direccion }}</h6>
+                <h4 class="card-title text-right pr-1">{{ room.nombre }}</h4>
+                <h6 class="card-title text-right pr-1">{{ days}}
+                  {% set singular = "noche" %}
+                  {% if days > 1 %}
+                    {% set singular = "noches" %}
+                  {% endif %}
+                  {{ singular }} x {{ room.precio }}
+                  <span>€</span>
+                </h6>
+                {% set calc = 0 %}
+                {% if days is not empty %}
+                  {% set calc = room.precio * days %}
+                  <h5 class="card-title text-right pr-1">{{ calc }}<span>€</span></h5>
+                {% endif %}
+                <hr class="mx-1">
+                <h5 class="card-title pl-1">Descripción</h5>
+                <div class="card mb-2">
+                  <p class="card-text overflow-auto p-1" style="height:120px">
+                    {{ room.idhospedaje.descripcion}}
+                  </p>
+                </div>
+                <h5 class="card-title pl-1">Servicios</h5>
+                <div class="card mb-2">
+                  <p class="card-text overflow-auto p-1" style="height:120px">
+                    {% for item in roomservice %}
+                     - {{ item.idservicio.nombre}}
+                    {% endfor %}
+                  </p>
+                </div>
+                <a id="comment-link" href="" class="btn w-100" data-toggle="modal" data-target="#comment-modal">
+                <div class="row justify-content-right ">
+                    <div class="col-12">             
+                      <p class="text-left pr-1 mb-0">Comentarios - {{ room.numComentarios}} </p>
+                    </div>
+                    <div class="col-12">
+                    {% set val = room.mediaValoracion %}
+                    {% if val != 0 %}
+                      <p class="text-left mb-0"> 
+                        Valoracion -
+                        {% for i in 1..val %} 
+                          <span class="fa fa-star checked text-warning" id="star{{i}}"></span>
+                        {% endfor %}
+                      </p>
+                    {% else %}
+                      <p class="text-left mb-0">Valoracion</p>
+                    {% endif %}
+                    {% set valpet = room.mediaValoracionMascotas %}
+                    {% if valpet != 0 %}
+                      <p class="text-left mb-0"> 
+                         Valoracion mascotas -
+                         {% for i in 1..valpet %} 
+                          <span class="fa fa-star checked text-warning" id="star{{i}}"></span>
+                        {% endfor %}
+                      </p>
+                    {% else %}
+                      <p class="text-left mb-0">Valoracion mascotas</p>
+                    {% endif %}
+                  </div>
+                </div>
+                </a>
+                <div class="justify-content-md-right"></div>
+                <div class="justify-content-md-right"></div>
+                <div class="col-12 justify-content-lg-center">
+                  <div class="col-4"></div>
+                  <div class="col-4 mx-auto mt-2" >
+                    {% if linkcontrol == "busqueda" %}
+                      <a class="btn btn-primary mb-4 px-0 btn-home w-100" href="{{ path("listaReserva", { idHabitacion: room.id }) }}?destination={{ destination }}&typehosting={{ typehosting }}&from={{ from }}&to={{ to }}&adults={{ adults }}&children={{ children }}&pets={{ pets }}&days={{ days }}" role="button">Reservar</a>
+                    {% endif %}
+                  </div>
+                  <div class="col-4"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pb-4" style="height: 20%">
+    <div class="col-12 justify-content-center">
+      <div class="w-25 mx-auto mt-5 btn-registry">
+        <a class="btn btn-primary mb-4 btn-home btn-registry" href="/proveedor" role="button">Registra tu negocio</a>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<!--Modal-->
+<div id="comment-modal" class="modal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+     <div class="modal-header">
+        <h4 class="modal-title">Comentarios</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- se repetirá por cada resultado-->
+      {% for item in comment %}
+        <div class="modal-body pb-0 pt-1 px-2" >
+          <div class="media row">
+            <div class="media-body col-2 ">
+              <p class="mt-1">{{ item.idcliente.nombre }} {{ item.idcliente.apellidos }}</p>
+            </div>
+            <div class="media-body col-7 ">
+                <p class="text-left">{{ item.comentario }}</p>
+            </div>
+            <div class="media-body col-3 ">
+              <div>
+                <p class="text-right mb-0">Valoración:</p>
+              </div>
+              <div>
+                {% set val = item.valoracion %}
+                  <p class="text-right mb-0">
+                    {% for i in 1..val %} 
+                      <span class="fa fa-star checked text-warning" id="star{{i}}"></span>
+                    {% endfor %}
+                  </p>
+              </div>
+              <div>
+                <p class="text-right mb-0">Valoración mascotas:</p>
+              </div>
+              <div class="">
+                {% set valpet = item.valoracionmascotas %}
+                  <p class="text-right mb-0"> 
+                    {% for i in 1..valpet %} 
+                      <span class="fa fa-star checked text-warning" id="star{{i}}"></span>
+                    {% endfor %}
+                  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="mx-3 my-0">
+      {% endfor %}
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-home" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('js/detail.js') }}"></script>
+{% endblock %}

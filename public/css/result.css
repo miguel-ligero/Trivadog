@@ -1,0 +1,40 @@
+.result-frame {
+  border-top: 3px solid #9dc66b;
+  border-left: 3px solid #9dc66b;
+  border-right: 3px solid #4361c2;
+  border-bottom: 3px solid #4361c2;
+  /* border-radius: 15px; */
+}
+
+.link-result:hover {
+  text-decoration: none;
+}
+
+
+
+.result-frame:hover {
+  background-color: #fffdfdb6;
+  /*color: white; */
+  border-top: 3px solid #4361c2;
+  border-left: 3px solid #4361c2;
+  border-right: 3px solid #9dc66b;
+  border-bottom: 3px solid #9dc66b;
+}
+
+
+
+table {
+  color: black;
+}
+
+
+
+@media (max-width: 992px) {
+  .media-body {
+    margin-top: 30px;
+  }
+
+  .text-right {
+    text-align: center !important;
+  }
+}

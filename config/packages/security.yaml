@@ -1,0 +1,62 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        users_in_memory: { memory: null }
+        users:
+            entity:
+                class: 'App\Entity\Clientes'
+                #property: 'nombre'
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            lazy: true
+            provider: users_in_memory
+            guard:
+                authenticators:
+                    - App\Security\AutentificadorAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+    encoders:
+        # use your user class name here
+        App\Entity\Clientes:
+            # Use native password encoder
+            # This value auto-selects the best possible hashing algorithm
+            # (i.e. Sodium when available).
+            algorithm: auto
+                   
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/home, roles: [ROLE_USER, IS_AUTHENTICATED_FULLY] }
+        #- { path: ^/habitaciones, roles: ROLE_USER }
+        - { path: ^/reservas, roles: [ROLE_USER, ROLE_PROVIDER, ROLE_ADMIN] }
+        #- { path: ^/registrousuario/index, roles: }
+        #- { path: ^/registrousuario/nuevo, roles: [ROLE_USER, ROLE_PROVIDER] }
+        - { path: ^/registrousuario/editar, roles: [ROLE_USER, ROLE_PROVIDER] }
+        #- { path: ^/registrousuario/guardar, roles: [ROLE_USER, ROLE_PROVIDER] }
+        - { path: ^/registrousuario/cuentacliente, roles: ROLE_USER }
+        - { path: ^/hospedaje, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        - { path: ^/comentarios, roles: [ROLE_USER, ROLE_ADMIN] }
+        - { path: ^/multimedia, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        # - { path: ^/proveedores/cuentaproveedor, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        # - { path: ^/proveedores/nuevo, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        # - { path: ^/proveedores/editar, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        # - { path: ^/proveedores/guardar, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        # - { path: ^/proveedores/reservas, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        # - { path: ^/proveedores/habitacion, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        - { path: ^/servicioshabitaciones, roles: [ROLE_PROVIDER, ROLE_ADMIN] }
+        - { path: ^/seguridad, roles: ROLE_ADMIN }
+        - { path: ^/servicios, roles: ROLE_ADMIN }
+        - { path: ^/home/back, roles: ROLE_ADMIN }

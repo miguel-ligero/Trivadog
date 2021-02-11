@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comentarios{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Comentarios</h1>
+    <div>
+        <a class="btn btn-primary mb-4 btn-home" href="{{ path('back') }}">Volver</a>
+    </div>
+    <div>
+        <a class="btn btn-primary mb-4 btn-home" href="{{ path('comentarioshospedaje_new') }}">Crear nuevo</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Comentario</th>
+                <th>Valoracion</th>
+                <th>Valoracionmascotas</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comentarioshospedaje in comentarioshospedajes %}
+            <tr>
+                <td>{{ comentarioshospedaje.id }}</td>
+                <td>{{ comentarioshospedaje.comentario }}</td>
+                <td>{{ comentarioshospedaje.valoracion }}</td>
+                <td>{{ comentarioshospedaje.valoracionmascotas }}</td>
+                <td>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('comentarioshospedaje_show', {'id': comentarioshospedaje.id}) }}">Detalles</a>
+                    <a class="btn btn-primary mb-4 btn-home" href="{{ path('comentarioshospedaje_edit', {'id': comentarioshospedaje.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No se ha encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+{% endblock %}
