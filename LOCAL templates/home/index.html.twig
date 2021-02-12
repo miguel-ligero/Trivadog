@@ -17,8 +17,8 @@
                         <input id="auComplete" name="destination" type="text" class="form-control form-control-sm search" placeholder="Destino" required>
                     </div>
                     <div class="col-md-6 col-lg-2  pt-2">
-                        <select id="typehosting"name="typehosting" class="custom-select form-control-sm search" placeholder="">
-                            <option value=""></option>
+                        <select id="typehosting"name="typehosting" class="custom-select form-control-sm search" placeholder="" required>
+                            <option value="">Seleccione uno</option>
                             {% for item in hostingtype %}
                             <option value="{{ item.id }}">{{ item.nombre }}</option>
                             {% endfor %}
@@ -40,7 +40,7 @@
                         <input id="pets" name="pets" type="text" class="form-control form-control-sm search" placeholder="Mascotas">
                     </div>
                     <div class="col-md-4 col-lg-1 pt-2 mr-0">
-                        <button id="btnsearch" name="btnsearch" type="submit" class="btn btn-primary btn-home btn-sm" disabled>Buscar</button>
+                        <button id="btnsearch" name="btnsearch" type="submit" class="btn btn-primary btn-home btn-sm">Buscar</button>
                     </div>
                 </div>
             </form>
@@ -121,18 +121,18 @@
 
     //Se inicializa al seleccionar el destino del autocomplete
     function InicializarFormulario() {
-        EventosFormulario();
+        //EventosFormulario();
     }
 
     function EventosFormulario() {
         //La primera vez se actualiza el local storage al devolver el json la peticion AJAX del autocomplete
         $('#auComplete').on('blur', function () {
-            StorageUpdate(this);
+            //StorageUpdate(this);
         });
         
         $('#typehosting').on({
             blur: function () {
-                StorageUpdate(this);
+                //StorageUpdate(this);
             },
             change: function() {
                 var check = $('#typehosting').val();
@@ -149,18 +149,18 @@
         });
 
         $('#inputfrom').on('change', function () {
-            StorageUpdate(this);
+            //StorageUpdate(this);
         });
 
         $('#inputto').on('change', function () {
-            StorageUpdate(this);
+            //StorageUpdate(this);
         });
     }
     
     function StorageUpdate(input){
         //Se mira si el input tiene algun dato, y si es así se almacena en el local storage el id del input
         //y "ok"
-        $("#btnsearch").attr('disabled', 'disabled');
+        //$("#btnsearch").attr('disabled', 'disabled');
         var data = input.value;
         var input = input.id;
         if (data != ""){

@@ -19,7 +19,7 @@
                         <input id="auComplete" name="destination" type="text" class="form-control form-control-sm search" placeholder="Destino" value="{{ destination }}" required>
                     </div>
                     <div class="col-md-6 col-lg-2  pt-2">
-                        <select id="typehosting"name="typehosting" class="custom-select form-control-sm search" placeholder="">
+                        <select id="typehosting"name="typehosting" class="custom-select form-control-sm search" placeholder="" required>
                             <option value=""></option>
                             {% set selected = ""%}
                             {% for item in hostingtype %}
@@ -286,18 +286,18 @@
 
         //Se inicializa al seleccionar el destino del autocomplete
     function InicializarFormulario() {
-        EventosFormulario();
+        //EventosFormulario();
     }
 
     function EventosFormulario() {
         //La primera vez se actualiza el local storage al devolver el json la peticion AJAX del autocomplete
         $('#auComplete').on('blur', function () {
-            StorageUpdate(this);
+            //StorageUpdate(this);
         });
         
         $('#typehosting').on({
             blur: function () {
-                StorageUpdate(this);
+                //StorageUpdate(this);
             },
             change: function() {
                 var check = $('#typehosting').val();
@@ -314,18 +314,18 @@
         });
 
         $('#inputfrom').on('change', function () {
-            StorageUpdate(this);
+            //StorageUpdate(this);
         });
 
         $('#inputto').on('change', function () {
-            StorageUpdate(this);
+            //StorageUpdate(this);
         });
     }
     
     function StorageUpdate(input){
         //Se mira si el input tiene algun dato, y si es así se almacena en el local storage el id del input
         //y "ok"
-        $("#btnsearch").attr('disabled', 'disabled');
+        //$("#btnsearch").attr('disabled', 'disabled');
         var data = input.value;
         var input = input.id;
         if (data != ""){

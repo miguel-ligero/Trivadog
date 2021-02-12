@@ -22,7 +22,7 @@ function InicialiceAutocomplete(){
         minLength: 3,
         select: function (event, ui) {
             objBuscar = ui.item.obj; 
-            StorageUpdate(this);
+            //StorageUpdate(this);
             InicializarFormulario();// home/index.twig
             $('#typehosting').val("");
         }
