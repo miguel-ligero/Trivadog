@@ -17,3 +17,5 @@ Por su parte los proveedores, además de poder modificar sus datos, pueden gesti
   Nota 1. Teniendo en cuenta las bases de la gestión de proyectos, he tenido que valorar calidad, costes y tiempo. Debido a que este proyecto es para demostrar lo que hemos aprendido durante el bootcamp, la opción de aumentar los costes y aumentar el tiempo limite no eran una opción, por lo que he tenido que sacrificar la calidad. Y puestos a sacrificar, he preferido sacrificar la parte del diseño, del cual no he quedado muy satisfecho, aunque sí de la maquetación y de la adaptación a los distintos tamaños de pantalla ("web responsive"). También faltaría refactorizar partes del código y eliminar código que se podría unificar con pequeñas modificaciones (fallo a la hora de planificar los requerimientos de la app). 
   
   Nota 2. La BBDD se encuentra en la carpeta .vscode/BaseDatos/trivadog.sql.
+
+http://trivadog.mipropia.com/
